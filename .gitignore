@@ -11,3 +11,12 @@
 *.lai
 *.la
 *.a
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Latex
+*.aux
+*.log
+*.gz
