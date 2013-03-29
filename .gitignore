@@ -20,3 +20,8 @@
 *.aux
 *.log
 *.gz
+
+# Eclipse
+src/.cproject
+src/.project
+src/Debug
