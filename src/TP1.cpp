@@ -104,7 +104,7 @@ TFloat biseccion(const double a, const double b, const double tol, const int max
 }
 
 
-int main(int argc, char *argv[]) {
+int main2(int argc, char *argv[]) {
 	ifstream file(argv[1]);
 	if(file.is_open()) {
 		double sumatoria=0;
