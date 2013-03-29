@@ -2,27 +2,57 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
+
+#include "lib/getopt_pp.h"
 
 #include "Metodos.h"
 #include "Ecuaciones.h"
 
 using namespace std;
+using namespace GetOpt;
 
-void Ayuda(char *programa) {
-	cout << "Uso: " << programa << " [MEDICIONES]" << endl
-	     << "  donde [MEDICIONES] es el path a un archivo de texto plano con la muestra" << endl
-	     << "  de la distribución gamma standard cuyos parámetros se desean estimar." << endl
-	     << endl
-	     << "Formato del archivo [MEDICIONES]:" << endl
-	     << "    Línea 1: [n]" << endl
-	     << "    Línea 2: [x1] [x2] ... [xn]" << endl
-	     << "  donde [n] es la cantidad de mediciones (entero), y [x1] [x2] ... [xn]" << endl
-	     << "  son las n mediciones (reales positivos) separadas por un espacio en blanco." << endl;
+// Parámetros por defecto
+#define PRECISION   51
+#define TOLERANCIA  0.0001
+#define ITERACIONES 100
+
+// Métodos de aproximación
+#define BISECCION "biseccion"
+#define NEWTON    "newton"
+
+void Ayuda(string ejecutable) {
+	cout << "Uso: " << ejecutable << " --mediciones <archivo> --metodo <metodo> [PARAMETROS] [OPCIONES]" << endl
+		 << endl
+		 << "  --muestra <archivo>    Path al archivo con la muestra de la distribución" << endl
+		 << "  --metodo  <metodo>     Alguno de los siguientes métodos: biseccion, newton" << endl
+		 << endl
+		 << "Parámetros del método de bisección:" << endl
+		 << endl
+		 << "  --a0 <a0>              Extremo inferior del intervalo inicial (mayor estricto a 0)" << endl
+		 << "  --a0 <b0>              Extremo superior del intervalo inicial (mayor estricto a 0)" << endl
+		 << endl
+		 << "Parámetros del método de Newton:" << endl
+		 << endl
+		 << "  --p0 <p0>              Aproximación inicial (mayor estricto a 0)" << endl
+		 << endl
+		 << "Opciones:" << endl
+		 << endl
+		 << "  -i  --iteraciones <i>  Número máximo de iteraciones a realizar (valor por defecto: " << ITERACIONES << ")" << endl
+		 << "  -t  --precision   <t>  Bits de precisión en la mantisa (menor estricto a 52;" << endl
+		 << "                         valor por defecto: " << PRECISION << ")" << endl
+		 << "  -e  --error       <e>  Cota superior del error a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
+		 << endl
+		 << "Ejemplos de uso:" << endl
+		 << endl
+		 << "  " << ejecutable << " --muestra datos.txt --metodo biseccion --a0 1 --b0 1000" << endl
+		 << "  " << ejecutable << " --muestra datos.txt --metodo newton --p0 15" << endl;
+	exit(-1);
 }
 
-void ErrorAlAbrirArchivo(char *path) {
-	cout << "No se pudo abrir el archivo " << path << "." << endl
-	     << "Para obtener instrucciones de uso, invocar el programa sin argumentos." << endl;
+void ErrorAlAbrirArchivo(string path) {
+	cout << "No se pudo abrir el archivo " << path << "." << endl;
+	exit(-1);
 }
 
 vector<double>* LeerMuestra(ifstream& f) {
@@ -42,30 +72,55 @@ vector<double>* LeerMuestra(ifstream& f) {
 }
 
 int main(int argc, char *argv[]) {
-	// Comprobar línea de comandos
-	if(argc != 2) {
-		Ayuda(argv[0]);
-		return -1;
-	}
+	GetOpt_pp args(argc, argv);
+
+	// Parámetros generales
+	string path;   // Path al archivo con la muestra
+	string metodo; // Método de búsqueda de ceros
+	int n;         // Máximo número de iteraciones
+	size_t t;      // Dígitos de precisión en la mantisa
+	double tol;    // Máximo error tolerable
+
+	// Parámetros del método de bisección
+	double a0, b0;
+
+	// Parámetros del método de Newton
+	double p0;
+
+	// Lectura de parámetros obligatorios
+	if(!(args >> Option("muestra", path)))  Ayuda(argv[0]);
+	if(!(args >> Option("metodo", metodo))) Ayuda(argv[0]);
+
+	// Lectura de parámetros de cada método
+	if(metodo == BISECCION) {
+		if(!(args >> Option("a0", a0))) Ayuda(argv[0]);
+		if(!(args >> Option("b0", b0))) Ayuda(argv[0]);
+	}else if(metodo == NEWTON) {
+		if(!(args >> Option("p0", p0))) Ayuda(argv[0]);
+	} else Ayuda(argv[0]);
+
+	// Lectura de parámetros opcionales
+	args >> Option('i', "iteraciones", n,   ITERACIONES);
+	args >> Option('t', "precision",   t,   (size_t) PRECISION);
+	args >> Option('e', "error",       tol, TOLERANCIA);
 
 	// Abrir archivo con la muestra
-	ifstream f(argv[1]);
-	if(!f.is_open()) {
-		ErrorAlAbrirArchivo(argv[1]);
-		return -1;
-	}
+	ifstream f(path.c_str());
+	if(!f.is_open()) ErrorAlAbrirArchivo(path);
 
 	// Leer la muestra y cerrar archivo
 	vector<double>* muestra = LeerMuestra(f);
 	f.close();
 
-	size_t t = 51;
+	pair<double, int> beta;
 
-	pair<double, int> beta = Biseccion(Ecuacion4, 1.0, 1000.0, 0.00000001, 100, *muestra, t);
-	//pair<double, int> beta = Newton(Ecuacion4, DEcuacion4, 7.5, 0.0000000000001, 100, *muestra, t);
+	if(metodo == BISECCION) {
+		beta = Biseccion(Ecuacion4, a0, b0, tol, n, *muestra, t);
+	} else {
+		beta = Newton(Ecuacion4, DEcuacion4, p0, tol, n, *muestra, t);
+	}
 
 	cout << "# de iteraciones = " << beta.second << endl
-	     << "f(beta)          = " << setprecision(t) << Ecuacion4(beta.first, *muestra, t) << endl
 	     << "Sigma            = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
 	     << "Beta             = " << setprecision(t) << beta.first << endl
 	     << "Lambda           = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
