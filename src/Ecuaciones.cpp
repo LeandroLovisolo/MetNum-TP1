@@ -41,7 +41,7 @@ double R(double s, vector<double> muestra, size_t t) {
 
 double Ecuacion4(double beta, const vector<double>& muestra, size_t t) {
 	/*
-	 * A - B - C = 0
+	 * Ecuacion4 = A - B - C
 	 *
 	 * donde:
 	 *
@@ -64,7 +64,7 @@ double Ecuacion4(double beta, const vector<double>& muestra, size_t t) {
 
 double Ecuacion5(double beta, const vector<double>& muestra, size_t t) {
 	/*
-	 * A - 1 - B = 0
+	 * Ecuacion5 = A - 1 - B
 	 *
 	 * donde:
 	 *
