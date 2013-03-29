@@ -9,6 +9,8 @@ double Ecuacion4(double beta, const vector<double>& muestra, size_t t);
 
 double Ecuacion5(double beta, const vector<double>& muestra, size_t t);
 
+double DEcuacion4(double beta, const vector<double>& muestra, size_t t);
+
 double Sigma(double beta, const vector<double>& muestra, size_t t);
 
 double Lambda(double beta, const vector<double>& muestra, size_t t);

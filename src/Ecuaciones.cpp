@@ -132,3 +132,74 @@ double Lambda(double beta, const vector<double>& muestra, size_t t) {
 
 	return (TFloat(1.0, t) / (TFloat(beta, t) * (A/B - C/muestra.size()))).dbl();
 }
+
+/*****************************************************************************
+ * DERIVADAS *****************************************************************
+ *****************************************************************************/
+
+double DM(double s, vector<double> muestra, size_t t) {
+	TFloat sumatoria(0.0, t);
+
+	for(unsigned int i = 0; i < muestra.size(); i++) {
+		sumatoria = sumatoria + pow(muestra[i], s) * log(muestra[i]);
+	}
+
+	return ((TFloat(1.0, t) / muestra.size()) * sumatoria).dbl();
+}
+
+double DMsombrero(double s, vector<double> muestra, size_t t) {
+	TFloat sumatoria(0.0, t);
+
+	for(unsigned int i = 0; i < muestra.size(); i++) {
+		sumatoria = sumatoria + pow(muestra[i], s) * pow(log(muestra[i]), 2);
+	}
+
+	return ((TFloat(1.0, t) / muestra.size()) * sumatoria).dbl();
+}
+
+double DR(double s, vector<double> muestra, size_t t) {
+	/*
+	 * DR = [D*A - C*B] / A^2
+	 *
+	 * donde:
+	 *
+	 * A = M(s)
+	 * B = Msombrero(s)
+	 * C = DM(s)
+	 * D = DMsombrero(s)
+	 */
+
+	TFloat A(t), B(t), C(t), D(t);
+	A = M(s, muestra, t);
+	B = Msombrero(s, muestra, t);
+	C = DM(s, muestra, t);
+	D = DMsombrero(s, muestra, t);
+
+	return ((D*A - C*B) / (A * A)).dbl();
+}
+
+double DEcuacion4(double beta, const vector<double>& muestra, size_t t) {
+	/*
+	 * DEcuacion4 = 2*D/C - 2*B/A - [E + beta*F - G]/[1 + beta*(E - G)]
+	 *
+	 * donde:
+	 * A = M(beta)
+	 * B = DM(beta)
+	 * C = M(2 * beta)
+	 * D = DM(2 * beta)
+	 * E = R(beta)
+	 * F = DR(beta)
+	 * G = R(0)
+	 */
+
+	TFloat A(t), B(t), C(t), D(t), E(t), F(t), G(t);
+	A = M(beta, muestra, t);
+	B = DM(beta, muestra, t);
+	C = M(2*beta, muestra, t);
+	D = DM(2*beta, muestra, t);
+	E = R(beta, muestra, t);
+	F = DR(beta, muestra, t);
+	G = R(0, muestra, t);
+
+	return (D*2/C - B*2/A - (E + F*beta - G)/((E - G)*beta + 1)).dbl();
+}

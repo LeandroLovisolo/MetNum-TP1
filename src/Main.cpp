@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <vector>
 
@@ -40,10 +41,6 @@ vector<double>* LeerMuestra(ifstream& f) {
 	return muestra;
 }
 
-TFloat func(const TFloat& x, const vector<double>& muestra, size_t t) {
-	return TFloat(x * 2.0 - 1.0);
-}
-
 int main(int argc, char *argv[]) {
 	// Comprobar línea de comandos
 	if(argc != 2) {
@@ -64,12 +61,14 @@ int main(int argc, char *argv[]) {
 
 	size_t t = 51;
 
-	pair<double, int> beta = Biseccion(Ecuacion5, 7.0, 10.0, 0.00000001, 100, *muestra, t);
+	pair<double, int> beta = Biseccion(Ecuacion4, 1.0, 1000.0, 0.00000001, 100, *muestra, t);
+	//pair<double, int> beta = Newton(Ecuacion4, DEcuacion4, 7.5, 0.0000000000001, 100, *muestra, t);
 
 	cout << "# de iteraciones = " << beta.second << endl
-	     << "Sigma            = " << Sigma(beta.first, *muestra, t) << endl
-	     << "Beta             = " << beta.first << endl
-	     << "Lambda           = " << Lambda(beta.first, *muestra, t) << endl;
+	     << "f(beta)          = " << setprecision(t) << Ecuacion4(beta.first, *muestra, t) << endl
+	     << "Sigma            = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
+	     << "Beta             = " << setprecision(t) << beta.first << endl
+	     << "Lambda           = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
 
 	delete muestra;
 	return 0;
