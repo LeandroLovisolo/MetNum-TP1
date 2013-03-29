@@ -19,12 +19,6 @@ TFloat f(const TFloat &x) { //Funcion ilustrativa
        return result;
 }
 
-TFloat funcionDespeje(const TFloat &beta, const int precision=52) {
-	//Asumimos que log es ln, hay que ver eso
-	TFloat result(log(1 + (beta*(R(beta)-R(0))).dbl()) + 2*log(M(beta).dbl()) - log(M(2*beta).dbl()), precision);
-	return result;
-}
-
 TFloat MDif(const TFloat &beta, const int precision=52) { //Se utiliza regla de la cadena para derivar, ver  si está bien
 	//sum(xi^beta) = beta*sum(xi^beta-1)/n =
 	TFloat result(0.0, precision);
@@ -47,7 +41,7 @@ TFloat mSombreroDif(const TFloat &beta, const int precision=52) { //Ver si está
 	TFloat result(0.0, precision);
 	//la derivada de sum(x^beta*log(x)) = sum(x^(beta-1)*(beta*log(x)+1)))*beta
 	for(unsigned int i=0;i<dataSize;i++) {
-		result+((pow(dataArr[i], beta.dbl()-1)*(beta*log(dataArr[i]))+1)); //Ver si es log o ln
+		result+( (TFloat(pow(dataArr[i], beta.dbl()-1)) *  (beta*log(dataArr[i])) +1)); //Ver si es log o ln
 	}
 	return result*(beta/dataSize);
 }
@@ -63,6 +57,12 @@ TFloat mSombrero(const TFloat &beta, const int precision=52) {
 
 TFloat R(const TFloat &beta,const int precision=52) {
 	return mSombrero(beta)/mSombrero(beta);
+}
+
+TFloat funcionDespeje(const TFloat &beta, const int precision=52) {
+	//Asumimos que log es ln, hay que ver eso
+	TFloat result(log(1 + (beta*(R(beta)-R(0))).dbl()) + 2*log(M(beta).dbl()) - log(M(beta*2).dbl()), precision);
+	return result;
 }
 
 TFloat newton(const double x0, const double tol, const int maxIter, const int precision=52) {
