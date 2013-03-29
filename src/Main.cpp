@@ -62,13 +62,14 @@ int main(int argc, char *argv[]) {
 	vector<double>* muestra = LeerMuestra(f);
 	f.close();
 
-	size_t t = 54;
+	size_t t = 51;
 
-	TFloat beta = Biseccion(Ecuacion4, 0.0, 20.0, 0.1, 10, *muestra, t);
+	pair<double, int> beta = Biseccion(Ecuacion5, 7.0, 10.0, 0.00000001, 100, *muestra, t);
 
-	cout << "Sigma  = " << Sigma(beta, *muestra, t).dbl() << endl
-	     << "Beta   = " << beta.dbl() << endl
-	     << "Lambda = " << Lambda(beta, *muestra, t).dbl() << endl;
+	cout << "# de iteraciones = " << beta.second << endl
+	     << "Sigma            = " << Sigma(beta.first, *muestra, t) << endl
+	     << "Beta             = " << beta.first << endl
+	     << "Lambda           = " << Lambda(beta.first, *muestra, t) << endl;
 
 	delete muestra;
 	return 0;

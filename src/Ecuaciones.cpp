@@ -2,31 +2,44 @@
 
 #include "Ecuaciones.h"
 
-TFloat M(const TFloat& s, vector<double> muestra, size_t t) {
-	TFloat sumatoria(0, t);
+double M(double s, vector<double> muestra, size_t t) {
+	TFloat sumatoria(0.0, t);
 
 	for(unsigned int i = 0; i < muestra.size(); i++) {
-		sumatoria = sumatoria + pow(muestra[i], s.dbl());
+		sumatoria = sumatoria + pow(muestra[i], s);
 	}
 
-	return (TFloat(1.0, t) / muestra.size()) * sumatoria;
+	return ((TFloat(1.0, t) / muestra.size()) * sumatoria).dbl();
 }
 
-TFloat Msombrero(const TFloat& s, vector<double> muestra, size_t t) {
-	TFloat sumatoria(0, t);
+double Msombrero(double s, vector<double> muestra, size_t t) {
+	TFloat sumatoria(0.0, t);
 
 	for(unsigned int i = 0; i < muestra.size(); i++) {
-		sumatoria = sumatoria + pow(muestra[i], s.dbl()) * log(muestra[i]);
+		sumatoria = sumatoria + pow(muestra[i], s) * log(muestra[i]);
 	}
 
-	return (TFloat(1.0, t) / muestra.size()) * sumatoria;
+	return ((TFloat(1.0, t) / muestra.size()) * sumatoria).dbl();
 }
 
-TFloat R(const TFloat& s, vector<double> muestra, size_t t) {
-	return Msombrero(s, muestra, t) / M(s, muestra, t);
+double R(double s, vector<double> muestra, size_t t) {
+	/*
+	 * R = A / B
+	 *
+	 * donde:
+	 *
+	 * A = Msombrero(s)
+	 * B = M(s)
+	 */
+
+	TFloat A(t), B(t);
+	A = Msombrero(s, muestra, t);
+	B = M(s, muestra, t);
+
+	return (A / B).dbl();
 }
 
-TFloat Ecuacion4(const TFloat& beta, const vector<double>& muestra, size_t t) {
+double Ecuacion4(double beta, const vector<double>& muestra, size_t t) {
 	/*
 	 * A - B - C = 0
 	 *
@@ -40,21 +53,33 @@ TFloat Ecuacion4(const TFloat& beta, const vector<double>& muestra, size_t t) {
 	 */
 
 	TFloat A(t), B(t), C(t), D(t), E(t);
-	A = log(M(beta * 2, muestra, t).dbl());
-	B = 2 * log(M(beta, muestra, t).dbl());
+	A = log(M(beta * 2.0, muestra, t));
+	B = 2 * log(M(beta, muestra, t));
 	D = R(beta, muestra, t);
-	E = R(TFloat(0.0, t), muestra, t);
-	C = log(((beta * (D - E)) + 1.0).dbl());
+	E = R(0.0, muestra, t);
+	C = log((((D - E) * beta) + 1.0).dbl());
 
-	cout << "A = " << A.dbl() << " "
-	     << "B = " << B.dbl() << " "
-	     << "C = " << C.dbl() << endl;
-	cout << "A - B - C = " << (A - B - C).dbl() << endl;
-
-	return A - B - C;
+	return (A - B - C).dbl();
 }
 
-TFloat Sigma(const TFloat& beta, const vector<double>& muestra, size_t t) {
+double Ecuacion5(double beta, const vector<double>& muestra, size_t t) {
+	/*
+	 * A - 1 - B = 0
+	 *
+	 * donde:
+	 *
+	 * A = M(2 * beta) / [M(beta)]^2
+	 * B = beta * (R(beta) - R(0))
+	 */
+
+	TFloat A(t), B(t);
+	A = TFloat(M(2 * beta, muestra, t), t) / pow(M(beta, muestra, t), 2);
+	B = TFloat(beta, t) * (R(beta, muestra, t) - R(0, muestra, t));
+
+	return (A - 1 - B).dbl();
+}
+
+double Sigma(double beta, const vector<double>& muestra, size_t t) {
 	/*
 	 * sigma = [A] ^ (1/beta)
 	 *
@@ -68,15 +93,16 @@ TFloat Sigma(const TFloat& beta, const vector<double>& muestra, size_t t) {
 
 	TFloat B(0.0, t);
 	for(unsigned int i = 0; i < muestra.size(); i++) {
-		B = B + pow(muestra[i], beta.dbl());
+		B = B + pow(muestra[i], beta);
 	}
 
-	TFloat A = B / (Lambda(beta, muestra, t) * muestra.size());
+	TFloat A(t);
+	A = B / (Lambda(beta, muestra, t) * muestra.size());
 
-	return TFloat(pow(A.dbl(), (TFloat(1.0, t) / beta).dbl()), t);
+	return TFloat(pow(A.dbl(), (TFloat(1.0, t) / beta).dbl()), t).dbl();
 }
 
-TFloat Lambda(const TFloat& beta, const vector<double>& muestra, size_t t) {
+double Lambda(double beta, const vector<double>& muestra, size_t t) {
 	/*
 	 * lambda = [beta * (A/B - C/n)]^-1
 	 *
@@ -91,12 +117,12 @@ TFloat Lambda(const TFloat& beta, const vector<double>& muestra, size_t t) {
 
 	TFloat A(0.0, t);
 	for(unsigned int i = 0; i < muestra.size(); i++) {
-		A = A + pow(muestra[i], beta.dbl()) * log(muestra[i]);
+		A = A + pow(muestra[i], beta) * log(muestra[i]);
 	}
 
 	TFloat B(0.0, t);
 	for(unsigned int i = 0; i < muestra.size(); i++) {
-		B = B + pow(muestra[i], beta.dbl());
+		B = B + pow(muestra[i], beta);
 	}
 
 	TFloat C(0.0, t);
@@ -104,5 +130,5 @@ TFloat Lambda(const TFloat& beta, const vector<double>& muestra, size_t t) {
 		C = C + log(muestra[i]);
 	}
 
-	return TFloat(1.0, t) / (beta * (A/B - C/muestra.size()));
+	return (TFloat(1.0, t) / (TFloat(beta, t) * (A/B - C/muestra.size()))).dbl();
 }
