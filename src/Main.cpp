@@ -30,7 +30,7 @@ void Ayuda(string ejecutable) {
 		 << "Parámetros del método de bisección:" << endl
 		 << endl
 		 << "  --a0 <a0>              Extremo inferior del intervalo inicial (mayor estricto a 0)" << endl
-		 << "  --a0 <b0>              Extremo superior del intervalo inicial (mayor estricto a 0)" << endl
+		 << "  --b0 <b0>              Extremo superior del intervalo inicial (mayor estricto a 0)" << endl
 		 << endl
 		 << "Parámetros del método de Newton:" << endl
 		 << endl
