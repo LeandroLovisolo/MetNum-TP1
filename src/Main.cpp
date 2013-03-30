@@ -42,6 +42,8 @@ void Ayuda(string ejecutable) {
 		 << "  -t  --precision   <t>  Bits de precisión en la mantisa (menor estricto a 52;" << endl
 		 << "                         valor por defecto: " << PRECISION << ")" << endl
 		 << "  -e  --error       <e>  Cota superior del error a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
+		 << "  --csv                  Imprimir resultados en formato CSV (columnas n, sigma, beta, lambda)" << endl
+		 << "                         donde n es la cantidad de iteraciones realizadas." << endl
 		 << endl
 		 << "Ejemplos de uso:" << endl
 		 << endl
@@ -120,10 +122,16 @@ int main(int argc, char *argv[]) {
 		beta = Newton(Ecuacion4, DEcuacion4, p0, tol, n, *muestra, t);
 	}
 
-	cout << "# de iteraciones = " << beta.second << endl
-	     << "Sigma            = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
-	     << "Beta             = " << setprecision(t) << beta.first << endl
-	     << "Lambda           = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
+	if(args >> OptionPresent("csv")) {
+		cout << setprecision(t) << Sigma(beta.first, *muestra, t) << ", "
+             << setprecision(t) << beta.first << ", "
+             << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
+	} else {
+		cout << "# de iteraciones = " << beta.second << endl
+			 << "Sigma            = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
+			 << "Beta             = " << setprecision(t) << beta.first << endl
+			 << "Lambda           = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
+	}
 
 	delete muestra;
 	return 0;
