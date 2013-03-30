@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <cstdlib>
+#include <ctime>
 
 #include "lib/getopt_pp.h"
 
@@ -20,6 +21,9 @@ using namespace GetOpt;
 // Métodos de aproximación
 #define BISECCION "biseccion"
 #define NEWTON    "newton"
+
+// Medición de tiempo
+clock_t begin, end;
 
 void Ayuda(string ejecutable) {
 	cout << "Uso: " << ejecutable << " --mediciones <archivo> --metodo <metodo> [PARAMETROS] [OPCIONES]" << endl
@@ -115,15 +119,20 @@ int main(int argc, char *argv[]) {
 	pair<double, int> beta;
 
 	if(metodo == BISECCION) {
+		begin = clock();
 		beta = Biseccion(Ecuacion4, a0, b0, tol, n, *muestra, t);
+		end = clock();
 	} else {
+		begin = clock();
 		beta = Newton(Ecuacion4, DEcuacion4, p0, tol, n, *muestra, t);
+		end = clock();
 	}
 
 	cout << "# de iteraciones = " << beta.second << endl
 	     << "Sigma            = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
 	     << "Beta             = " << setprecision(t) << beta.first << endl
-	     << "Lambda           = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
+	     << "Lambda           = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl
+		 << "Tiempo (ms)     = " << (double)((end - begin)/(CLOCKS_PER_SEC/1000)) << endl;
 
 	delete muestra;
 	return 0;
