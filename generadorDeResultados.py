@@ -14,7 +14,7 @@ for fileName in os.listdir(pathMuestras):
 		f.write('Archivo: '+fileName+'\n')
 		f.write('Metodo de Biseccion con a0=1, b0=50\n')
 		output = subprocess.check_output(pathTP+" --muestra "+pathMuestras+fileName+" --metodo biseccion --a0 1 --b0 50", shell=True)
-		output = output.split('\n', 3)
+		output = output.split('\n', 4)
 		for line in output:
 			f.write(line+'\n')
 		iteraciones = output[0].split(" = ",2)[1]
@@ -24,7 +24,7 @@ for fileName in os.listdir(pathMuestras):
 		#print("Sigma: "+sigma+" Beta: "+beta+" Lambda: "+lambd)
 		f.write('\nMetodo de Newton con p0=5\n')
 		output = subprocess.check_output(pathTP+" --muestra "+pathMuestras+fileName+" --metodo newton --p0 5", shell=True);
-		output = output.split('\n', 3)
+		output = output.split('\n', 4)
 		for line in output:
 			f.write(line+'\n')
 		iteraciones = output[0].split(" = ",2)[1]
