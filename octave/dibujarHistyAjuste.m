@@ -12,7 +12,8 @@ x_bins = min(data) : 0.02 : max(data);
 count = histc(data,x_bins);
 
 figure;
-bar(x_bins, count / sum(count));
+color = [0, 0.7, 0]
+bar(x_bins, count / sum(count), "facecolor", color, "edgecolor", color);
 
 hold on
 y = GGDpdf_c(x_bins,sigma,beta,lambda);
