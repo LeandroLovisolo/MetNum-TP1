@@ -21,10 +21,13 @@ using namespace GetOpt;
 #define BISECCION "biseccion"
 #define NEWTON    "newton"
 
+// Usado en la impresión de la salida en formato CSV
+#define tab       "\t"
+
 void Ayuda(string ejecutable) {
 	cout << "Uso: " << ejecutable << " --mediciones <archivo> --metodo <metodo> [PARAMETROS] [OPCIONES]" << endl
 		 << endl
-		 << "  --muestra <archivo>    Path al archivo con la muestra de la distribución" << endl
+		 << "  --muestra <archivo>    Ruta al archivo con la muestra de la distribución" << endl
 		 << "  --metodo  <metodo>     Alguno de los siguientes métodos: biseccion, newton" << endl
 		 << endl
 		 << "Parámetros del método de bisección:" << endl
@@ -42,8 +45,9 @@ void Ayuda(string ejecutable) {
 		 << "  -t  --precision   <t>  Bits de precisión en la mantisa (menor estricto a 52;" << endl
 		 << "                         valor por defecto: " << PRECISION << ")" << endl
 		 << "  -e  --error       <e>  Cota superior del error a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
-		 << "  --csv                  Imprimir resultados en formato CSV (columnas n, sigma, beta, lambda)" << endl
-		 << "                         donde n es la cantidad de iteraciones realizadas." << endl
+		 << "  --csv                  Imprimir resultados en formato CSV separados por tabs en el siguiente orden:" << endl
+		 << "                         [archivo], [n], [sigma], [beta], [lambda]; donde [archivo] es la ruta al" << endl
+		 << "                         archivo con la muestra, y [n] es la cantidad de iteraciones realizadas" << endl
 		 << endl
 		 << "Ejemplos de uso:" << endl
 		 << endl
@@ -123,8 +127,10 @@ int main(int argc, char *argv[]) {
 	}
 
 	if(args >> OptionPresent("csv")) {
-		cout << setprecision(t) << Sigma(beta.first, *muestra, t) << ", "
-             << setprecision(t) << beta.first << ", "
+		cout << path << tab
+		     << beta.second << tab
+		     << setprecision(t) << Sigma(beta.first, *muestra, t) << tab
+             << setprecision(t) << beta.first << tab
              << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
 	} else {
 		cout << "# de iteraciones = " << beta.second << endl
