@@ -139,7 +139,8 @@ int main(int argc, char *argv[]) {
 		     << beta.second << tab
 		     << setprecision(t) << Sigma(beta.first, *muestra, t) << tab
              << setprecision(t) << beta.first << tab
-             << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
+             << setprecision(t) << Lambda(beta.first, *muestra, t) << tab
+             << (c * 1000 / CLOCKS_PER_SEC) << endl;
 	} else {
 		cout << "# de iteraciones    = " << beta.second << endl
 			 << "Sigma               = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
