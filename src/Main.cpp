@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <cstdlib>
+#include <ctime>
 
 #include "lib/getopt_pp.h"
 
@@ -118,14 +119,21 @@ int main(int argc, char *argv[]) {
 	vector<double>* muestra = LeerMuestra(f);
 	f.close();
 
-	pair<double, int> beta;
+	// Guardamos el reloj en el instante anterior a aproximar beta
+	clock_t c = clock();
 
+	// Aproximamos beta
+	pair<double, int> beta;
 	if(metodo == BISECCION) {
 		beta = Biseccion(Ecuacion4, a0, b0, tol, n, *muestra, t);
 	} else {
 		beta = Newton(Ecuacion4, DEcuacion4, p0, tol, n, *muestra, t);
 	}
 
+	// Calculamos la cantidad de ticks de reloj que llevó aproximar beta
+	c = clock() - c;
+
+	// Mostramos resultados en pantalla
 	if(args >> OptionPresent("csv")) {
 		cout << path << tab
 		     << beta.second << tab
@@ -133,10 +141,11 @@ int main(int argc, char *argv[]) {
              << setprecision(t) << beta.first << tab
              << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
 	} else {
-		cout << "# de iteraciones = " << beta.second << endl
-			 << "Sigma            = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
-			 << "Beta             = " << setprecision(t) << beta.first << endl
-			 << "Lambda           = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl;
+		cout << "# de iteraciones    = " << beta.second << endl
+			 << "Sigma               = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
+			 << "Beta                = " << setprecision(t) << beta.first << endl
+			 << "Lambda              = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl
+             << "Tiempo de ejecución = " << (c * 1000 / CLOCKS_PER_SEC) << "ms" << endl;
 	}
 
 	delete muestra;
