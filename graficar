@@ -1,31 +1,36 @@
 #!/usr/bin/env python2
 #coding=UTF-8
 
-# Uso: ./graficar [pantalla | png] [parametros del programa C++]
+# Uso: ./graficar [--pantalla | --archivo <nombre>] [parametros del programa C++]
 #
-# Si se provee el flag 'pantalla', se muestra el gráfico en una ventana.
-# Si se provee el flag 'png', se guarda el gráfico en el archivo grafico.png.
+#   --pantalla          Muestra el gráfico en una ventana
+#   --archivo <nombre>  Guarda el gráfico en formato tex en el path <nombre>
 #
 # Ejemplos:
-# ./graficar pantalla --muestra data/X1.txt --metodo biseccion --a0 1 --b0 100
-# ./graficar png --muestra data/X2.txt --metodo newton --p0 10
+# ./graficar --pantalla --muestra data/X1.txt --metodo biseccion --a0 1 --b0 100
+# ./graficar --archivo mi_grafico --muestra data/X2.txt --metodo newton --p0 10
 
 import os
 import sys
 import commands
 
 # Chequeo cantidad de parámetros
-if len(sys.argv) < 2 or not sys.argv[1] in ["pantalla", "png"]:
+if len(sys.argv) < 2 or \
+		(not sys.argv[1] in ["--pantalla", "--archivo"]) or \
+		(sys.argv[1] == "--archivo" and len(sys.argv) < 3):
 	print "Parámetros incorrectos. Ver comentarios al comienzo del script."
 	sys.exit(-1)
 
-# Ejecuto el programa C++ y me guardo la salida
-command = "./dgg --csv " + " ".join(sys.argv[2:])
+# Decido si voy a graficar en pantalla o guardar a un archivo
+archivo = sys.argv[2] if sys.argv[1] == "--archivo" else ""
+
+# Ejecuto el programa C++, imprimo la salida y me la guardo
+command = "./dgg --csv " + " ".join(sys.argv[(2 if sys.argv[1] == "--pantalla" else 3):])
 status, output = commands.getstatusoutput(command)
+print output
 
 # Si el programa C++ generó un error, imprimo el texto de ayuda y termino el script
 if status != 0:
-	print output
 	sys.exit(-1)
 
 # Obtengo los parámetros a partir de la salida del programa
@@ -33,7 +38,7 @@ if status != 0:
 pnsbl = output.split("\t")
 
 # Concateno los parámetros encerrándolos con comillas
-parametros = sys.argv[1] + ' "' + '" "'.join(pnsbl[0:1] + pnsbl[2:]) + '"'
+parametros = '"' + archivo + '" "' + '" "'.join(pnsbl[0:1] + pnsbl[2:]) + '"'
 
 # Grafico los resultados
-os.system("octave/histograma_y_ajuste.m " + parametros)
+os.system("octave/graficar.m " + parametros)

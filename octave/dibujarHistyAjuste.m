@@ -16,5 +16,6 @@ bar(x_bins, count / sum(count));
 
 hold on
 y = GGDpdf_c(x_bins,sigma,beta,lambda);
-plot(x_bins, y/sum(y),'r')
+p = plot(x_bins, y/sum(y),'r')
+set(p, "linewidth", 5)
 
