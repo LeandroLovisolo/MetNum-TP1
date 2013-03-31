@@ -1,0 +1,39 @@
+#!/usr/bin/env python2
+#coding=UTF-8
+
+# Uso: ./graficar [pantalla | png] [parametros del programa C++]
+#
+# Si se provee el flag 'pantalla', se muestra el gráfico en una ventana.
+# Si se provee el flag 'png', se guarda el gráfico en el archivo grafico.png.
+#
+# Ejemplos:
+# ./graficar pantalla --muestra data/X1.txt --metodo biseccion --a0 1 --b0 100
+# ./graficar png --muestra data/X2.txt --metodo newton --p0 10
+
+import os
+import sys
+import commands
+
+# Chequeo cantidad de parámetros
+if len(sys.argv) < 2 or not sys.argv[1] in ["pantalla", "png"]:
+	print "Parámetros incorrectos. Ver comentarios al comienzo del script."
+	sys.exit(-1)
+
+# Ejecuto el programa C++ y me guardo la salida
+command = "./dgg --csv " + " ".join(sys.argv[2:])
+status, output = commands.getstatusoutput(command)
+
+# Si el programa C++ generó un error, imprimo el texto de ayuda y termino el script
+if status != 0:
+	print output
+	sys.exit(-1)
+
+# Obtengo los parámetros a partir de la salida del programa
+# (path, n (cantidad de iteraciones), sigma, beta, lambda)
+pnsbl = output.split("\t")
+
+# Concateno los parámetros encerrándolos con comillas
+parametros = sys.argv[1] + ' "' + '" "'.join(pnsbl[0:1] + pnsbl[2:]) + '"'
+
+# Grafico los resultados
+os.system("octave/histograma_y_ajuste.m " + parametros)
