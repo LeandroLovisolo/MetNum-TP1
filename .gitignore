@@ -25,3 +25,9 @@
 src/.cproject
 src/.project
 src/Debug
+
+# Binario del proyecto
+dgg
+
+# Misc
+grafico.png
