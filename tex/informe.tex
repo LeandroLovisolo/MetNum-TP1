@@ -4,11 +4,14 @@
 \usepackage[spanish]{babel}
 \usepackage{setspace}        % Para setear el espacio entre lineas del título en la carátula
 \usepackage{fancyhdr}
+\usepackage{lastpage}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{blindtext}
+\usepackage{caption}
+\usepackage{subcaption}
 
 
 %%%%%%%%%% Configuración de Fancyhdr - Inicio %%%%%%%%%%
@@ -115,7 +118,40 @@ numérico (bisección y Newton) para aproximar una solución con un margen de er
 
 \section{Desarrollo}
 
-\blindtext
+Para obtener una primera noción de la ubicación del parámetro $\beta$ en la
+recta real, aplicamos el método de bisección sobre todas las muestras en el
+intervalo $[1, 100]$\footnote{Tomamos un intervalo arbitrariamente grande,
+usando como heurística los parámetros de las muestras de referencia provistas
+por la cátedra y la similitud del rango de valores de las mediciones de las
+muestras de referencia y de las que se desean estimar.} con límites de 100
+iteraciones y error absoluto $10^{-4}$, y precisión de 51 bits de mantisa.
+
+En cada caso el método convergió a una solución luego de 20 iteraciones.
+Una vez hallado $\beta$, despejamos los parámetros $\sigma$ y $\lambda$ y
+dibujamos el histograma y función de densidad superpuestos. Se observa
+excelente ajuste en todas las muestras.
+
+Siguiendo un razonamiento similar, modificamos el experimento anterior,
+esta vez aplicando el método de Newton, tomando como aproximación inicial
+$\beta_0 = 10$ y manteniendo los mismos criterios de parada y precisión.
+
+Observamos que el método converge a soluciones muy similares a las del
+experimento inicial luego de 7 iteraciones en promedio, a excepción de la
+muestra X3. Con esta última, el método converge a un valor muy pequeño de
+$\beta$ que efectivamente anula la ecuación (4) pero no ajusta al histograma
+de la muestra.
+
+Para remendar esta situación, repetimos el experimento sobre la muestra X3
+tomando como aproximación inicial la parte entera del valor de $\beta$ hallado
+con el método de bisección. Observamos convergencia a una solución correcta
+luego de 5 iteraciones.
+
+Una vez hallados los parámetros de las distribuciones de cada muestra y un
+conjunto de puntos de partida para los métodos que decidimos aplicar,
+procedimos a explorar otras configuraciones haciendo variar el máximo error
+tolerado y la cantidad de dígitos de precisión en la mantisa, intentando
+reducir la cantidad de tiempo e interaciones necesarias para converger a una
+solución y encontrar un equilibrio entre buen ajuste y tiempo de ejecución.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,6 +160,33 @@ numérico (bisección y Newton) para aproximar una solución con un margen de er
 
 
 \section{Resultados}
+
+\blindtext
+
+\begin{figure}[h]
+	\centering
+	\input{grafico.tex}
+	\caption{Ejemplo de gráfico.}
+\end{figure}
+
+\blindtext
+
+\begin{figure}[h]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \centering
+				\input{grafico.tex}
+                \caption{A gull}
+                \label{fig:gull}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \centering
+                \input{grafico.tex}
+                \caption{A mouse}
+                \label{fig:mouse}
+        \end{subfigure}        
+        \caption{Ejemplo de gráficos en doble columna}\label{fig:animals}
+\end{figure}
 
 \blindtext
 
