@@ -12,11 +12,14 @@ x_bins = min(data) : 0.02 : max(data);
 count = histc(data,x_bins);
 
 figure;
-color = [0, 0.7, 0]
+color = [0, 0.7, 0];
 bar(x_bins, count / sum(count), "facecolor", color, "edgecolor", color);
 
 hold on
 y = GGDpdf_c(x_bins,sigma,beta,lambda);
-p = plot(x_bins, y/sum(y),'r')
+p = plot(x_bins, y/sum(y),'r');
 set(p, "linewidth", 5)
 
+title(strcat("$\\sigma = ",  num2str(sigma),  "$ \\hspace{2.5mm}",
+	         "$\\beta = ",   num2str(beta),   "$ \\hspace{2.5mm}",
+	         "$\\lambda = ", num2str(lambda), "$"));

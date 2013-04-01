@@ -27,7 +27,6 @@ archivo = sys.argv[2] if sys.argv[1] == "--archivo" else ""
 # Ejecuto el programa C++, imprimo la salida y me la guardo
 command = "./dgg --csv " + " ".join(sys.argv[(2 if sys.argv[1] == "--pantalla" else 3):])
 status, output = commands.getstatusoutput(command)
-print output
 
 # Si el programa C++ generó un error, imprimo el texto de ayuda y termino el script
 if status != 0:
