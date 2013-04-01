@@ -10,9 +10,7 @@
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{blindtext}
-\usepackage{caption}
-\usepackage{subcaption}
-
+\usepackage{floatrow}
 
 %%%%%%%%%% Configuración de Fancyhdr - Inicio %%%%%%%%%%
 \pagestyle{fancy}
@@ -29,6 +27,35 @@
    \renewcommand{\footrulewidth}{0pt}
 }
 %%%%%%%%%% Configuración de Fancyhdr - Fin %%%%%%%%%%
+
+
+%%%%%%%%%% Macros para incluir gráficos - Inicio %%%%%%%%%%
+% Inserta un gráfico centrado.
+% Uso: \grafico{ruta al grafico .tex}{etiqueta}
+\newcommand{\grafico}[2]{
+	\begin{figure}[H]
+		\caption{#2}
+		\centering
+		\input{#1}
+	\end{figure}
+}
+
+% Inserta dos gráficos en fila.
+% Uso: \graficodoble{ruta al grafico 1.tex}{etiqueta 1}{ruta al grafico 2.tex}{etiqueta 2}
+\newcommand{\graficodoble}[4]{
+	\begin{figure}[H]
+		\begin{floatrow}
+			\floatbox{figure}[.4\textwidth][\FBheight][t]
+			{\caption{#2}}
+			{\input{#1}}
+			\hspace*{1cm}
+			\floatbox{figure}[.4\textwidth][\FBheight][t]
+			{\caption{#4}}
+			{\input{#3}}
+		\end{floatrow}
+	\end{figure}	
+}
+%%%%%%%%%% Macros para incluir gráficos - Fin %%%%%%%%%%
 
 
 \begin{document}
@@ -161,35 +188,13 @@ solución y encontrar un equilibrio entre buen ajuste y tiempo de ejecución.
 
 \section{Resultados}
 
-\blindtext
+Incluímos a continuación los parámetros aproximados para cada muestra junto
+con sus respectivos gráficos (histograma y ajuste.)
 
-\begin{figure}[h]
-	\centering
-	\input{grafico.tex}
-	\caption{Ejemplo de gráfico.}
-\end{figure}
-
-\blindtext
-
-\begin{figure}[h]
-        \centering
-        \begin{subfigure}[b]{0.5\textwidth}
-                \centering
-				\input{grafico.tex}
-                \caption{A gull}
-                \label{fig:gull}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.5\textwidth}
-                \centering
-                \input{grafico.tex}
-                \caption{A mouse}
-                \label{fig:mouse}
-        \end{subfigure}        
-        \caption{Ejemplo de gráficos en doble columna}\label{fig:animals}
-\end{figure}
-
-\blindtext
-
+\graficodoble{X1-final.tex}{Muestra X1}{X2-final.tex}{Muestra X2}
+\graficodoble{X3-final.tex}{Muestra X3}{X4-final.tex}{Muestra X4}
+\graficodoble{X5-final.tex}{Muestra X5}{X6-final.tex}{Muestra X6}
+\grafico{X7-final.tex}{Muestra X7}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Discusión                                                                 %%
