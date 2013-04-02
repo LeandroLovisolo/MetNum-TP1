@@ -12,6 +12,29 @@
 \usepackage{blindtext}
 \usepackage{floatrow}
 \usepackage{csvsimple}
+\usepackage{xcolor}
+\usepackage{listings}
+
+
+%%%%%%%%%% Configuración de Listings - Inicio %%%%%%%%%%
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\lstset{extendedchars=\true}
+\lstdefinestyle{customc}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	language=C++,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	numbers=left,
+	numberstyle=\color{mygray}
+}
+\lstset{escapechar=@,style=customc}
+%%%%%%%%%% Configuración de Listings - Fin %%%%%%%%%%
+
 
 %%%%%%%%%% Configuración de Fancyhdr - Inicio %%%%%%%%%%
 \pagestyle{fancy}
@@ -349,7 +372,22 @@ El archivo contiene en la primer l\'inea la cantidad de datos, y en la l\'inea s
 
 
 \section{Apéndice B: Código Fuente}
-
-\blindtext
-
+\subsection{Main.cpp}
+\lstinputlisting[language=C++]{../src/Main.cpp}
+\subsection{Metodos.h}
+\lstinputlisting[language=C++]{../src/Metodos.h}
+\subsection{Metodos.cpp}
+\lstinputlisting[language=C++]{../src/Metodos.cpp}
+\subsection{Ecuaciones.h}
+\lstinputlisting[language=C++]{../src/Ecuaciones.h}
+\subsection{Ecuaciones.cpp}
+\lstinputlisting[language=C++]{../src/Ecuaciones.cpp}
+\subsection{TFloat.h}
+\lstinputlisting[language=C++]{../src/TFloat.h}
+\subsection{TFloat.cpp}
+\lstinputlisting[language=C++]{../src/TFloat.cpp}
+%\subsection{lib/getopt_pp.h}
+%\lstinputlisting[language=C++]{../src/lib/getopt_pp.h}
+%\subsection{lib/getopt_pp.cpp}
+%\lstinputlisting[language=C++]{../src/lib/getopt_pp.cpp}
 \end{document}
