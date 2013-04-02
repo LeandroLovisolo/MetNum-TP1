@@ -12,6 +12,7 @@
 \usepackage{blindtext}
 \usepackage{floatrow}
 \usepackage{csvsimple}
+\usepackage{xstring}
 \usepackage{xcolor}
 \usepackage{listings}
 
@@ -127,6 +128,22 @@
 	\end{center}              
 }
 %%%%%%%%%% Macro para incluir CSVs - Fin %%%%%%%%%%
+
+
+%%%%%%%%%% Macros varios - Inicio %%%%%%%%%%
+% Devuelve el nombre de una muestra dada la ruta al archivo correspondiente
+% Uso: \nombremuestra{data/Xn.txt}
+%
+% Ejemplo: \nombremuesra{data/X1.txt}
+% Salida: X1
+\newcommand{\nombremuestra}[1]{%
+	\let \nombre #1%
+	\StrSubstitute{\nombre}{data/}{}[\nombre]%
+	\StrSubstitute{\nombre}{data/tag}{}[\nombre]%
+	\StrSubstitute{\nombre}{.txt}{}[\nombre]%
+	\nombre%
+}
+%%%%%%%%%% Macros varios - Fin %%%%%%%%%%
 
 
 \begin{document}
@@ -265,7 +282,7 @@ con sus respectivos gráficos (histograma y ajuste.)
 \incluircsv{final.csv}
            {|c|c|c|c|}
            {Muestra & $\sigma$ & $\beta$ & $\lambda$}
-           {\Muestra & \Sigma & \Beta & \Lambda}
+           {\nombremuestra{\Muestra} & \Sigma & \Beta & \Lambda}
 
 \graficodoble{X1-final.tex}{Muestra X1}{X2-final.tex}{Muestra X2}
 \graficodoble{X3-final.tex}{Muestra X3}{X4-final.tex}{Muestra X4}
