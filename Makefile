@@ -40,7 +40,7 @@ clean-graficos:
 ###############################################################################
 
 csvs:
-	echo "Muestra,Iteraciones,Sigma,Beta,Lambda,Tiempo" > tex/final.csv
+	echo "Muestra,Sigma,Beta,Lambda,Iteraciones,Tiempo" > tex/final.csv
 	./dgg --csv --metodo newton --p0 10 --muestra data/X1.txt >> tex/final.csv
 	./dgg --csv --metodo newton --p0 10 --muestra data/X2.txt >> tex/final.csv
 	./dgg --csv --metodo newton --p0 1  --muestra data/X3.txt >> tex/final.csv

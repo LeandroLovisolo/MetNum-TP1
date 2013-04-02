@@ -33,11 +33,11 @@ if status != 0:
 	sys.exit(-1)
 
 # Obtengo los parámetros a partir de la salida del programa
-# (path, n (cantidad de iteraciones), sigma, beta, lambda)
-pnsbl = output.split(",")
+# [path, sigma, beta, lambda, n (cantidad de iteraciones), t (tiempo de ejecución)]
+csv = output.split(",")
 
 # Concateno los parámetros encerrándolos con comillas
-parametros = '"' + archivo + '" "' + '" "'.join(pnsbl[0:1] + pnsbl[2:]) + '"'
+parametros = '"' + archivo + '" "' + '" "'.join(csv[0:4]) + '"'
 
 # Grafico los resultados
 os.system("octave/graficar.m " + parametros)

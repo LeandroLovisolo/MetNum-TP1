@@ -46,7 +46,7 @@ void Ayuda(string ejecutable) {
 		 << "                         valor por defecto: " << PRECISION << ")" << endl
 		 << "  -e  --error       <e>  Cota superior del error a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
 		 << "  --csv                  Imprimir resultados en formato CSV en el siguiente orden:" << endl
-		 << "                         [archivo], [n], [sigma], [beta], [lambda], [tiempo]; donde [archivo] es" << endl
+		 << "                         [archivo], [sigma], [beta], [lambda], [n], [tiempo]; donde [archivo] es" << endl
 		 << "                         la ruta al archivo con la muestra, [n] es la cantidad de iteraciones" << endl
 		 << "                         realizadas y [tiempo] es el tiempo de ejecución medido en milisegundos." << endl
 		 << endl
@@ -139,16 +139,16 @@ int main(int argc, char *argv[]) {
 	// Mostramos resultados en pantalla
 	if(args >> OptionPresent("csv")) {
 		cout << path << ","
-		     << beta.second << ","
 		     << Sigma(beta.first, *muestra, t) << ","
              << beta.first << ","
              << Lambda(beta.first, *muestra, t) << ","
+		     << beta.second << ","
              << (c * 1000 / CLOCKS_PER_SEC) << endl;
 	} else {
-		cout << "# de iteraciones    = " << beta.second << endl
-			 << "Sigma               = " << Sigma(beta.first, *muestra, t) << endl
-			 << "Beta                = " << beta.first << endl
-			 << "Lambda              = " << Lambda(beta.first, *muestra, t) << endl
+		cout << "              Sigma = " << Sigma(beta.first, *muestra, t) << endl
+			 << "               Beta = " << beta.first << endl
+			 << "             Lambda = " << Lambda(beta.first, *muestra, t) << endl
+			 << "   # de iteraciones = " << beta.second << endl
              << "Tiempo de ejecución = " << (c * 1000 / CLOCKS_PER_SEC) << "ms" << endl;
 	}
 
