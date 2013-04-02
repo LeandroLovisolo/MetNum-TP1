@@ -1,7 +1,7 @@
 \documentclass[a4paper,10pt,twoside]{article}
 \usepackage{a4wide}
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-noshorthands,es-ucroman]{babel} % Opciones luego de spanish por problema de compatibilidad con csvsimple
 \usepackage{setspace}        % Para setear el espacio entre lineas del título en la carátula
 \usepackage{fancyhdr}
 \usepackage{lastpage}
@@ -11,6 +11,7 @@
 \usepackage{graphicx}
 \usepackage{blindtext}
 \usepackage{floatrow}
+\usepackage{csvsimple}
 
 %%%%%%%%%% Configuración de Fancyhdr - Inicio %%%%%%%%%%
 \pagestyle{fancy}
@@ -56,6 +57,53 @@
 	\end{figure}	
 }
 %%%%%%%%%% Macros para incluir gráficos - Fin %%%%%%%%%%
+
+
+%%%%%%%%%% Macro para incluir CSVs - Inicio %%%%%%%%%%
+% Inserta una tabla con el contenido de un archivo CSV.
+% Uso: \incluircsv{ruta al archivo.csv}{formato de columnas}{cabeza}{filas}
+%
+% Parámetros:
+%   {formato de columnas} formato idéntico al usado en \begin{table}{...}.
+%   {cabeza} el contenido de la primera fila de la tabla.
+%   {filas} el contenido de cada fila individual.
+%
+% Ejemplo:
+%
+%   --- Archivo ejemplo.csv ---
+%
+%     Nombre,Apellido,Edad
+%     Juan,Perez,30
+%     María,Gomez,25
+%     Pablo,Rodríguez,38
+%
+%   --- Código LaTeX ---
+%
+%     \incluircsv{ejemplo.csv}
+%                {|r|l|}
+%                {Sujeto & Edad}
+%                {\Nombre \Apellido & \Edad}
+%
+%   --- Salida ---
+%
+%      +-----------------+------+
+%      |          Sujeto | Edad |
+%      +-----------------+------+
+%      |      Juan Perez | 30   |
+%      |     María Gomez | 25   |
+%      | Pablo Rodríguez | 38   |
+%      +-----------------+------+
+\newcommand{\incluircsv}[4]{
+	\begin{center}
+		\csvreader[tabular=#2,
+		           table head=\hline #3 \\\hline,
+		           late after line=\\,
+		           late after last line=\\\hline,
+		           head to column names]
+		          {#1}{}{#4}
+	\end{center}              
+}
+%%%%%%%%%% Macro para incluir CSVs - Fin %%%%%%%%%%
 
 
 \begin{document}
@@ -188,13 +236,19 @@ solución y encontrar un equilibrio entre buen ajuste y tiempo de ejecución.
 
 \section{Resultados}
 
-Incluímos a continuación los parámetros aproximados para cada muestra junto
+Incluimos a continuación los parámetros hallados para cada muestra junto
 con sus respectivos gráficos (histograma y ajuste.)
+
+\incluircsv{final.csv}
+           {|c|c|c|c|}
+           {Muestra & $\sigma$ & $\beta$ & $\lambda$}
+           {\Muestra & \Sigma & \Beta & \Lambda}
 
 \graficodoble{X1-final.tex}{Muestra X1}{X2-final.tex}{Muestra X2}
 \graficodoble{X3-final.tex}{Muestra X3}{X4-final.tex}{Muestra X4}
 \graficodoble{X5-final.tex}{Muestra X5}{X6-final.tex}{Muestra X6}
 \grafico{X7-final.tex}{Muestra X7}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Discusión                                                                 %%

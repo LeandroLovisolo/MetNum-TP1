@@ -4,6 +4,8 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <limits>
+#include <cmath>
 
 #include "lib/getopt_pp.h"
 
@@ -21,9 +23,6 @@ using namespace GetOpt;
 // Métodos de aproximación
 #define BISECCION "biseccion"
 #define NEWTON    "newton"
-
-// Usado en la impresión de la salida en formato CSV
-#define tab       "\t"
 
 void Ayuda(string ejecutable) {
 	cout << "Uso: " << ejecutable << " --mediciones <archivo> --metodo <metodo> [PARAMETROS] [OPCIONES]" << endl
@@ -46,9 +45,10 @@ void Ayuda(string ejecutable) {
 		 << "  -t  --precision   <t>  Bits de precisión en la mantisa (menor estricto a 52;" << endl
 		 << "                         valor por defecto: " << PRECISION << ")" << endl
 		 << "  -e  --error       <e>  Cota superior del error a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
-		 << "  --csv                  Imprimir resultados en formato CSV separados por tabs en el siguiente orden:" << endl
-		 << "                         [archivo], [n], [sigma], [beta], [lambda]; donde [archivo] es la ruta al" << endl
-		 << "                         archivo con la muestra, y [n] es la cantidad de iteraciones realizadas" << endl
+		 << "  --csv                  Imprimir resultados en formato CSV en el siguiente orden:" << endl
+		 << "                         [archivo], [n], [sigma], [beta], [lambda], [tiempo]; donde [archivo] es" << endl
+		 << "                         la ruta al archivo con la muestra, [n] es la cantidad de iteraciones" << endl
+		 << "                         realizadas y [tiempo] es el tiempo de ejecución medido en milisegundos." << endl
 		 << endl
 		 << "Ejemplos de uso:" << endl
 		 << endl
@@ -133,19 +133,22 @@ int main(int argc, char *argv[]) {
 	// Calculamos la cantidad de ticks de reloj que llevó aproximar beta
 	c = clock() - c;
 
+	// Precisión decimal en la salida standard
+	cout.precision(6);
+
 	// Mostramos resultados en pantalla
 	if(args >> OptionPresent("csv")) {
-		cout << path << tab
-		     << beta.second << tab
-		     << setprecision(t) << Sigma(beta.first, *muestra, t) << tab
-             << setprecision(t) << beta.first << tab
-             << setprecision(t) << Lambda(beta.first, *muestra, t) << tab
+		cout << path << ","
+		     << beta.second << ","
+		     << Sigma(beta.first, *muestra, t) << ","
+             << beta.first << ","
+             << Lambda(beta.first, *muestra, t) << ","
              << (c * 1000 / CLOCKS_PER_SEC) << endl;
 	} else {
 		cout << "# de iteraciones    = " << beta.second << endl
-			 << "Sigma               = " << setprecision(t) << Sigma(beta.first, *muestra, t) << endl
-			 << "Beta                = " << setprecision(t) << beta.first << endl
-			 << "Lambda              = " << setprecision(t) << Lambda(beta.first, *muestra, t) << endl
+			 << "Sigma               = " << Sigma(beta.first, *muestra, t) << endl
+			 << "Beta                = " << beta.first << endl
+			 << "Lambda              = " << Lambda(beta.first, *muestra, t) << endl
              << "Tiempo de ejecución = " << (c * 1000 / CLOCKS_PER_SEC) << "ms" << endl;
 	}
 
