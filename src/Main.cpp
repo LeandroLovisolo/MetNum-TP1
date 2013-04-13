@@ -44,7 +44,9 @@ void Ayuda(string ejecutable) {
          << "  -i  --iteraciones <i>  Número máximo de iteraciones a realizar (valor por defecto: " << ITERACIONES << ")" << endl
          << "  -t  --precision   <t>  Bits de precisión en la mantisa (menor estricto a 52;" << endl
          << "                         valor por defecto: " << PRECISION << ")" << endl
-         << "  -e  --error       <e>  Cota superior del error a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
+         << "  -e  --error       <e>  Cota superior del error absoluto a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
+         << "  -r  --relativo         Usar error relativo en lugar de error absoluto como criterio de parada." << endl
+         << "                         La cota empleada es la provista con la opción anterior (-e ó --error)." << endl
          << "  --csv                  Imprimir resultados en formato CSV en el siguiente orden:" << endl
          << "                         [archivo], [sigma], [beta], [lambda], [n], [tiempo]; donde [archivo] es" << endl
          << "                         la ruta al archivo con la muestra, [n] es la cantidad de iteraciones" << endl
@@ -82,11 +84,12 @@ int main(int argc, char *argv[]) {
     GetOpt_pp args(argc, argv);
 
     // Parámetros generales
-    string path;   // Path al archivo con la muestra
-    string metodo; // Método de búsqueda de ceros
-    int n;         // Máximo número de iteraciones
-    size_t t;      // Dígitos de precisión en la mantisa
-    double tol;    // Máximo error tolerable
+    string path;       // Path al archivo con la muestra
+    string metodo;     // Método de búsqueda de ceros
+    int n;             // Máximo número de iteraciones
+    size_t t;          // Dígitos de precisión en la mantisa
+    double err;        // Cota superior del error absoluto o relativo
+    CriterioParada cp; // Criterio de parada
 
     // Parámetros del método de bisección
     double a0, b0;
@@ -109,7 +112,9 @@ int main(int argc, char *argv[]) {
     // Lectura de parámetros opcionales
     args >> Option('i', "iteraciones", n,   ITERACIONES);
     args >> Option('t', "precision",   t,   (size_t) PRECISION);
-    args >> Option('e', "error",       tol, TOLERANCIA);
+    args >> Option('e', "error",       err, TOLERANCIA);
+    cp = (args >> OptionPresent('r', "relativo")) ?
+        ERROR_RELATIVO : ERROR_ABSOLUTO;
 
     // Abrir archivo con la muestra
     ifstream f(path.c_str());
@@ -125,9 +130,9 @@ int main(int argc, char *argv[]) {
     // Aproximamos beta
     pair<double, int> beta;
     if(metodo == BISECCION) {
-        beta = Biseccion(Ecuacion4, a0, b0, tol, n, *muestra, t);
+        beta = Biseccion(Ecuacion4, a0, b0, cp, err, n, *muestra, t);
     } else {
-        beta = Newton(Ecuacion4, DEcuacion4, p0, tol, n, *muestra, t);
+        beta = Newton(Ecuacion4, DEcuacion4, p0, cp, err, n, *muestra, t);
     }
 
     // Calculamos la cantidad de ticks de reloj que llevó aproximar beta
