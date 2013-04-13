@@ -24,12 +24,8 @@
 tex/*.pdf
 
 # Eclipse
-src/.cproject
-src/.project
-src/Debug
+.cproject
+.project
 
 # Binario del proyecto
 dgg
-
-# Misc
-grafico.png
