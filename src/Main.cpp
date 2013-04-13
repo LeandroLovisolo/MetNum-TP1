@@ -17,7 +17,7 @@ using namespace GetOpt;
 
 // Parámetros por defecto
 #define PRECISION   51
-#define TOLERANCIA  0.0001
+#define COTA_ERROR  0.0001
 #define ITERACIONES 100
 
 // Métodos de aproximación
@@ -44,7 +44,7 @@ void Ayuda(string ejecutable) {
          << "  -i  --iteraciones <i>  Número máximo de iteraciones a realizar (valor por defecto: " << ITERACIONES << ")" << endl
          << "  -t  --precision   <t>  Bits de precisión en la mantisa (menor estricto a 52;" << endl
          << "                         valor por defecto: " << PRECISION << ")" << endl
-         << "  -e  --error       <e>  Cota superior del error absoluto a cometer (valor por defecto: " << TOLERANCIA << ")" << endl
+         << "  -e  --error       <e>  Cota superior del error absoluto a cometer (valor por defecto: " << COTA_ERROR << ")" << endl
          << "  -r  --relativo         Usar error relativo en lugar de error absoluto como criterio de parada." << endl
          << "                         La cota empleada es la provista con la opción anterior (-e ó --error)." << endl
          << "  --csv                  Imprimir resultados en formato CSV en el siguiente orden:" << endl
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
     // Lectura de parámetros opcionales
     args >> Option('i', "iteraciones", n,   ITERACIONES);
     args >> Option('t', "precision",   t,   (size_t) PRECISION);
-    args >> Option('e', "error",       err, TOLERANCIA);
+    args >> Option('e', "error",       err, COTA_ERROR);
     cp = (args >> OptionPresent('r', "relativo")) ?
         ERROR_RELATIVO : ERROR_ABSOLUTO;
 
