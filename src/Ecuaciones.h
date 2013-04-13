@@ -16,6 +16,3 @@ double Sigma(double beta, const vector<double>& muestra, size_t t);
 double Lambda(double beta, const vector<double>& muestra, size_t t);
 
 #endif /* ECUACIONES_H_ */
-
-
-
