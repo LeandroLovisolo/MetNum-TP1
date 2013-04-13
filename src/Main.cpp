@@ -143,12 +143,15 @@ int main(int argc, char *argv[]) {
 
     // Mostramos resultados en pantalla
     if(args >> OptionPresent("csv")) {
-        cout << path                            << ","
-             << Sigma(beta.first, *muestra, t)  << ","
-             << beta.first                      << ","
-             << Lambda(beta.first, *muestra, t) << ","
-             << beta.second                     << ","
-             << (c * 1000 / CLOCKS_PER_SEC)     << endl;
+        cout << path                                             << ","
+             << Sigma(beta.first, *muestra, t)                   << ","
+             << beta.first                                       << ","
+             << Lambda(beta.first, *muestra, t)                  << ","
+             << beta.second                                      << ","
+             << (cp == ERROR_RELATIVO ? "Relativo" : "Absoluto") << ","
+             << err                                              << ","
+             << t                                                << ","
+             << (c * 1000 / CLOCKS_PER_SEC)                      << endl;
     } else {
         cout << "              Sigma = " << Sigma(beta.first, *muestra, t) << endl
              << "               Beta = " << beta.first << endl

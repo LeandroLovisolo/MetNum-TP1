@@ -33,7 +33,7 @@ if status != 0:
 	sys.exit(-1)
 
 # Obtengo los parámetros a partir de la salida del programa
-# [path, sigma, beta, lambda, n (cantidad de iteraciones), t (tiempo de ejecución)]
+# [path, sigma, beta, lambda, n (cantidad de iteraciones), ...]
 csv = output.split(",")
 
 # Concateno los parámetros encerrándolos con comillas
