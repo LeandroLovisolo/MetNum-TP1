@@ -23,7 +23,7 @@
 import sys
 import commands
 
-precisiones = [51, 30, 10]
+precisiones = [51, 20, 13]
 criterios   = ["", "--relativo"]
 errores     = [0.001, 0.01, 0.1]
 
