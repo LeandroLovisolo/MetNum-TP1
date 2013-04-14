@@ -13,6 +13,9 @@ pair<double, int> Biseccion(double(*f)(double x, const vector<double>& muestra, 
         // Busco punto medio del intervalo
         p = (a + b) / 2.0;
 
+        // Criterio de parada: valor indefinido
+        if(isnan(p.dbl())) break;
+
         // Criterio de parada: error absoluto
         if(cp == ERROR_ABSOLUTO) {
             // Si la longitud del intervalo es menor que la cota superior
@@ -56,6 +59,9 @@ pair<double, int> Newton(double (*f )(double x, const vector<double>& muestra, s
     for(i = 1; i <= n; i++) {
         // Busco nueva aproximación
         p = TFloat(p0, t) - TFloat(f(p0, muestra, t), t) / df(p0, muestra, t);
+
+        // Criterio de parada: valor indefinido
+        if(isnan(p.dbl())) break;
 
         // Criterio de parada: error absoluto
         if(cp == ERROR_ABSOLUTO) {

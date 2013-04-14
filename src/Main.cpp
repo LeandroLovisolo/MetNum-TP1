@@ -18,11 +18,14 @@ using namespace GetOpt;
 // Parámetros por defecto
 #define PRECISION   51
 #define COTA_ERROR  0.0001
-#define ITERACIONES 100
+#define ITERACIONES 20
 
 // Métodos de aproximación
 #define BISECCION "biseccion"
 #define NEWTON    "newton"
+
+// Headers de la salida en formato CSV
+#define CSV_HEADERS "Muestra,Sigma,Beta,Lambda,Iteraciones,CritParada,CotaError,BitsMantisa,Tiempo"
 
 void Ayuda(string ejecutable) {
     cout << "Uso: " << ejecutable << " --mediciones <archivo> --metodo <metodo> [PARAMETROS] [OPCIONES]" << endl
@@ -51,6 +54,9 @@ void Ayuda(string ejecutable) {
          << "                         [archivo], [sigma], [beta], [lambda], [n], [tiempo]; donde [archivo] es" << endl
          << "                         la ruta al archivo con la muestra, [n] es la cantidad de iteraciones" << endl
          << "                         realizadas y [tiempo] es el tiempo de ejecución medido en milisegundos." << endl
+         << "  --csvheaders           Imprimir línea con los headers correspondientes a la salida producida" << endl
+         << "                         con la opción --csv. Ignora el resto de las opciones provistas y" << endl
+         << "                         finaliza inmediatamente la ejecución del programa." << endl
          << endl
          << "Ejemplos de uso:" << endl
          << endl
@@ -96,6 +102,12 @@ int main(int argc, char *argv[]) {
 
     // Parámetros del método de Newton
     double p0;
+
+    // Impresión de headers CSV
+    if(args >> OptionPresent("csvheaders")) {
+        cout << CSV_HEADERS << endl;
+        return 0;
+    }
 
     // Lectura de parámetros obligatorios
     if(!(args >> Option("muestra", path)))  Ayuda(argv[0]);
