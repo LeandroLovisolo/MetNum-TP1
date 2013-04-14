@@ -365,7 +365,15 @@ Resultados con distintas precisiones y cotas de error usando  método de bisecci
 
 \section{Discusión}
 
-\blindtext
+\subsection{Variaciones de cotas}
+Utilizando la tolerancia de 0.001 obtuvimos las mejores aproximaciones. La diferencia entre las precisiones de una tolerancia de 0.01 y 0.001 no fueron muy significativas a comparación de la utilización de la tolerancia 0.1 que muestra por ejemplo, en la muestra 3 del método de bisección un $\sigma$ de 3.12601 mientras que para 0.01 es de 3.50501. \\
+Observamos también que en ambos métodos, una tolerancia mas pequeña muestra una mayor cantidad de iteraciones.
+
+\subsubsection{Criterios de paradas}
+Entre el criterio de error absoluto y el de error relativo no encontramos diferencias significativas en la precisión de la estimación de parámetros pero puede verse, en especial en el método de bisección que se reduce un poco la cantidad de iteraciones.
+
+\subsubsection{Variación de bits de mantisa}
+Analizando los resultados tanto del método de Newton como el de bisección no notamos cambios significativos en la precisión de la estimación de los parámetros entre una mantisa de 51 y 30 bits. Sin embargo, utilizando 10 bits de precisión, el método de Newton no converge para ninguna muestra excepto la 4, la cuál arroja aproximaciones que no muestran una buena aproximación al gráfico. Por el lado de bisección, los resultados obtenidos con 10 bits tampoco dan aproximaciones ni buenas, ni correctas de los parámetros.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
