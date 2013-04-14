@@ -271,12 +271,14 @@ tomando como aproximación inicial la parte entera del valor de $\beta$ hallado
 con el método de bisección. Observamos convergencia a una solución correcta
 luego de 5 iteraciones.
 
+Probando un poco más con la muestra X3, vimos que también convergía a una solución correcta con $p_0 = 5$, realizamos la prueba con las demás muestras y vimos que estas también lo hacían, por lo que fijamos un $p_0$ fijo para nuestros experimentos en $p_0$ = 5.
+
 Una vez hallados los parámetros de las distribuciones de cada muestra y un
 conjunto de puntos de partida para los métodos que decidimos aplicar,
-procedimos a explorar otras configuraciones haciendo variar el máximo error
-tolerado y la cantidad de dígitos de precisión en la mantisa, intentando
-reducir la cantidad de tiempo e interaciones necesarias para converger a una
-solución y encontrar un equilibrio entre buen ajuste y tiempo de ejecución.
+procedimos a explorar otras configuraciones. 
+
+Decidimos probar con diferentes criterios de parada como el error absoluto o el error relativo. Para el máximo error
+tolerado elegimos los valores 0.1, 0.01 y 0.001 ya que una tolerancia de 0.1 podría mostrar diferencias significativas entre 0.01 y 0.001. Por último, decidimos probar con diferentes cantidades de bits de precisión en la mantisa, elegimos 51,30,10, para poder tener un valor de alta presición, media y baja con el cuál experimentar.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
