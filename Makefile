@@ -69,7 +69,7 @@ graficos-comparativos:
 	           "Error relativo $(PRECISION_2)"
 	./graficar --archivo biseccion-criterios-parada \
 	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
-	           "Error absoluto $(PRECISION_1) bits" \
+	           "Error absoluto $(PRECISION_1)" \
 	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
 	           "Error absoluto $(PRECISION_2)" \
 	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1) -r --muestra $(MUESTRA_CRITERIOS_PARADA)" \
