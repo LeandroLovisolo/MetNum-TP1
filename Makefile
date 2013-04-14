@@ -23,42 +23,45 @@ clean:
 ###############################################################################
 
 # Parámetros para los gráficos comparativos
-MUESTRA     = data/X1.txt
-MANTISA_1   = 51
-MANTISA_2   = 20
-MANTISA_3   = 14
-PRECISION_1 = 0.001
-PRECISION_2 = 0.1
+MUESTRA_MANTISAS         = data/X1.txt
+MUESTRA_CRITERIOS_PARADA = data/X2.txt
+MANTISA_1                = 51
+MANTISA_2                = 20
+MANTISA_3                = 15
+PRECISION_1              = 0.001
+PRECISION_2              = 0.1
 
-graficos:
-	./graficar --archivo X1-final "--metodo newton --p0 5 --muestra data/X1.txt"
-	./graficar --archivo X2-final "--metodo newton --p0 5 --muestra data/X2.txt"
-	./graficar --archivo X3-final "--metodo newton --p0 5 --muestra data/X3.txt"
-	./graficar --archivo X4-final "--metodo newton --p0 5 --muestra data/X4.txt"
-	./graficar --archivo X5-final "--metodo newton --p0 5 --muestra data/X5.txt"
-	./graficar --archivo X6-final "--metodo newton --p0 5 --muestra data/X6.txt"
-	./graficar --archivo X7-final "--metodo newton --p0 5 --muestra data/X7.txt"
+graficos: graficos-referencia graficos-comparativos
+
+graficos-referencia:
+	./graficar --archivo referencia-1 "--metodo newton --p0 5 --muestra data/X1.txt"
+	./graficar --archivo referencia-2 "--metodo newton --p0 5 --muestra data/X2.txt"
+	./graficar --archivo referencia-3 "--metodo newton --p0 5 --muestra data/X3.txt"
+	./graficar --archivo referencia-4 "--metodo newton --p0 5 --muestra data/X4.txt"
+	./graficar --archivo referencia-5 "--metodo newton --p0 5 --muestra data/X5.txt"
+	./graficar --archivo referencia-6 "--metodo newton --p0 5 --muestra data/X6.txt"
+	./graficar --archivo referencia-7 "--metodo newton --p0 5 --muestra data/X7.txt"
 	mv *.eps *.tex tex
 
 graficos-comparativos:
 	./graficar --archivo newton-mantisas \
-	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_1) --muestra $(MUESTRA)" \
-	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_2) --muestra $(MUESTRA)" \
-	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_3) --muestra $(MUESTRA)"
+	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_1) --muestra $(MUESTRA_MANTISAS)" \
+	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_2) --muestra $(MUESTRA_MANTISAS)" \
+	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_3) --muestra $(MUESTRA_MANTISAS)"
 	./graficar --archivo biseccion-mantisas \
-	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_1) --muestra $(MUESTRA)" \
-	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_2) --muestra $(MUESTRA)" \
-	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_3) --muestra $(MUESTRA)"
+	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_1) --muestra $(MUESTRA_MANTISAS)" \
+	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_2) --muestra $(MUESTRA_MANTISAS)" \
+	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_3) --muestra $(MUESTRA_MANTISAS)"
 	./graficar --archivo newton-criterios-parada \
-	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_1)    --muestra $(MUESTRA)" \
-	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_2)    --muestra $(MUESTRA)" \
-	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_1) -r --muestra $(MUESTRA)" \
-	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA)"
+	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_1)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_2)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_1) -r --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA_CRITERIOS_PARADA)"
 	./graficar --archivo biseccion-criterios-parada \
-	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1)    --muestra $(MUESTRA)" \
-	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2)    --muestra $(MUESTRA)" \
-	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1) -r --muestra $(MUESTRA)" \
-	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA)"
+	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1) -r --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA_CRITERIOS_PARADA)"
 	mv *.eps *.tex tex
 
 clean-graficos:
@@ -68,17 +71,17 @@ clean-graficos:
 # CSVs                                                                        #
 ###############################################################################
 
-csvs: csv-final csv-biseccion csv-newton
+csvs: csv-referencia csv-biseccion csv-newton
 
-csv-final:
-	./dgg --csvheaders                                       >  tex/final.csv
-	./dgg --csv --metodo newton --p0 5 --muestra data/X1.txt >> tex/final.csv
-	./dgg --csv --metodo newton --p0 5 --muestra data/X2.txt >> tex/final.csv
-	./dgg --csv --metodo newton --p0 5 --muestra data/X3.txt >> tex/final.csv
-	./dgg --csv --metodo newton --p0 5 --muestra data/X4.txt >> tex/final.csv
-	./dgg --csv --metodo newton --p0 5 --muestra data/X5.txt >> tex/final.csv
-	./dgg --csv --metodo newton --p0 5 --muestra data/X6.txt >> tex/final.csv
-	./dgg --csv --metodo newton --p0 5 --muestra data/X7.txt >> tex/final.csv
+csv-referencia:
+	./dgg --csvheaders                                       >  tex/referencia.csv
+	./dgg --csv --metodo newton --p0 5 --muestra data/X1.txt >> tex/referencia.csv
+	./dgg --csv --metodo newton --p0 5 --muestra data/X2.txt >> tex/referencia.csv
+	./dgg --csv --metodo newton --p0 5 --muestra data/X3.txt >> tex/referencia.csv
+	./dgg --csv --metodo newton --p0 5 --muestra data/X4.txt >> tex/referencia.csv
+	./dgg --csv --metodo newton --p0 5 --muestra data/X5.txt >> tex/referencia.csv
+	./dgg --csv --metodo newton --p0 5 --muestra data/X6.txt >> tex/referencia.csv
+	./dgg --csv --metodo newton --p0 5 --muestra data/X7.txt >> tex/referencia.csv
 
 csv-biseccion:
 	./tabular --metodo biseccion --a0 1 --b0 100 --muestra data/X1.txt > tex/biseccion-1.csv
@@ -100,3 +103,11 @@ csv-newton:
 
 clean-csvs:
 	rm tex/*.csv
+
+###############################################################################
+# Misc                                                                        #
+###############################################################################
+
+all-all: all graficos csvs
+
+clean-all: clean clean-graficos clean-csvs

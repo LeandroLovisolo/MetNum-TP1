@@ -291,15 +291,15 @@ tolerado elegimos los valores 0.1, 0.01 y 0.001 ya que una tolerancia de 0.1 pod
 Incluimos a continuación los parámetros hallados para cada muestra junto
 con sus respectivos gráficos (histograma y ajuste.)
 
-\incluircsv{final.csv}
+\incluircsv{referencia.csv}
            {|c|c|c|c|}
            {Muestra & $\sigma$ & $\beta$ & $\lambda$}
            {\nombremuestra{\Muestra} & \Sigma & \Beta & \Lambda}
 
-\graficodoble{X1-final.tex}{Muestra X1}{X2-final.tex}{Muestra X2}
-\graficodoble{X3-final.tex}{Muestra X3}{X4-final.tex}{Muestra X4}
-\graficodoble{X5-final.tex}{Muestra X5}{X6-final.tex}{Muestra X6}
-\grafico{X7-final.tex}{Muestra X7}
+\graficodoble{referencia-1.tex}{Muestra X1}{referencia-2.tex}{Muestra X2}
+\graficodoble{referencia-3.tex}{Muestra X3}{referencia-4.tex}{Muestra X4}
+\graficodoble{referencia-5.tex}{Muestra X5}{referencia-6.tex}{Muestra X6}
+\grafico{referencia-7.tex}{Muestra X7}
 
 Resultados con distintas precisiones y cotas de error usando  método de bisección:
 
@@ -360,10 +360,12 @@ Resultados con distintas precisiones y cotas de error usando  método de bisecci
 
 \subsection{Graficos comparativos}
 
-\graficodoble{biseccion-mantisas.tex}{Biseccion varias mantisas}
-             {newton-mantisas.tex}{Newton con varias mantisas}
-\graficodoble{biseccion-criterios-parada.tex}{Biseccion varios criterios de parada}
-             {newton-criterios-parada.tex}{Newton varios criterios de parada}
+\subsubsection{Distintas precisiones de mantisa}
+
+\graficodoble{biseccion-mantisas.tex}{Muestra X1: Método de Bisección}
+             {newton-mantisas.tex}{Muestra X1: Método de Newton}
+\graficodoble{biseccion-criterios-parada.tex}{Muestra X2: Método de Bisección}
+             {newton-criterios-parada.tex}{Muestra X2: Método de Newton}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

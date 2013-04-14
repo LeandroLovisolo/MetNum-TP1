@@ -1,0 +1,8 @@
+Muestra,Sigma,Beta,Lambda,Iteraciones,CritParada,CotaError,BitsMantisa,Tiempo
+data/X1.txt,2.43129,3.82185,2.15743,5,Absoluto,0.0001,51,180
+data/X2.txt,1.00707,4.12956,0.488519,4,Absoluto,0.0001,51,70
+data/X3.txt,3.49011,1.37701,1.16811,5,Absoluto,0.0001,51,70
+data/X4.txt,2.24167,3.01486,1.85459,6,Absoluto,0.0001,51,40
+data/X5.txt,2.01478,2.52392,2.97995,6,Absoluto,0.0001,51,100
+data/X6.txt,3.106,5.37172,1.76411,4,Absoluto,0.0001,51,70
+data/X7.txt,0.508847,3.14533,0.967074,5,Absoluto,0.0001,51,30
