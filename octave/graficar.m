@@ -76,6 +76,6 @@ if strcmp(args{1}, "")
     printf("Presionar cualquier tecla para terminar.\n")
     pause   
 else
-    print(args{1}, "-S800,500", "-dtex")
+    print(args{1}, "-S800,550", "-dtex")
     printf(cstrcat("El gráfico ", args{1}, " fue generado exitosamente.\n"))
 endif
