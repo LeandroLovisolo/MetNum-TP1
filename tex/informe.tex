@@ -386,7 +386,7 @@ Observamos también que en ambos métodos, una tolerancia mas pequeña muestra u
 Entre el criterio de error absoluto y el de error relativo no encontramos diferencias significativas en la precisión de la estimación de parámetros pero puede verse, en especial en el método de bisección que se reduce un poco la cantidad de iteraciones.
 
 \subsubsection{Variación de bits de mantisa}
-Analizando los resultados tanto del método de Newton como el de bisección no notamos cambios significativos en la precisión de la estimación de los parámetros entre una mantisa de 51 y 30 bits. Sin embargo, utilizando 10 bits de precisión, el método de Newton no converge para ninguna muestra excepto la 4, la cuál arroja aproximaciones que no muestran una buena aproximación al gráfico. Por el lado de bisección, los resultados obtenidos con 10 bits tampoco dan aproximaciones ni buenas, ni correctas de los parámetros.
+Analizando los resultados tanto del método de Newton como el de bisección pueden verse pequeñas diferencias entre las mantisas de 51 y 20 bits y una diferencia más notable con 15 bits de mantisa. Puede verse en los gráficos 8 y 9 cómo la curva magenta (15 bits) aproxima de manera menos exacta que 51 y 20 bits y que la curva roja (20 bits) tiene una pequeña diferencia con la curva azúl (51 bits).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
