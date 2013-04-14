@@ -3,19 +3,31 @@
 source("octave/leer_datos.m")
 source("octave/GGDpdf_c.m")
 
-args   = argv();
-data   = leer_datos(args{2});
-sigma  = [];
-beta   = [];
-lambda = [];
-colors = {"red", "blue", "magenta", "black"};
+args     = argv();
+data     = leer_datos(args{2});
+sigma    = [];
+beta     = [];
+lambda   = [];
+etiqueta = {"Muestra"};
+colors   = {"red", "blue", "magenta", "black"};
 
 i = 3;
-while(i < length(args))
+while(true)
     sigma(end+1)  = str2double(args{i});
-    beta(end+1)   = str2double(args{i+1});
-    lambda(end+1) = str2double(args{i+2});
-    i += 3;
+    i++;
+    if(i > length(args)) break; endif;
+
+    beta(end+1)   = str2double(args{i});
+    i++;
+    if(i > length(args)) break; endif;
+
+    lambda(end+1) = str2double(args{i});
+    i++;
+    if(i > length(args)) break; endif;
+
+    etiqueta{end+1} = args{i};
+    i++;
+    if(i > length(args)) break; endif;
 endwhile
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,17 +47,26 @@ i = 1;
 while(i <= length(sigma))
     hold on
     y = GGDpdf_c(x_bins, sigma(i), beta(i), lambda(i));
-    p = plot(x_bins, y/sum(y), 'r');
+    p = plot(x_bins, y/sum(y), 'color', colors{i});
     set(p, "linewidth", 3)
-    set(p, "color", colors{i})
     i++;
 endwhile
 
-% Pendiente: mostrar etiquetas coloreadas en el gráfico cuando se tienen
-% más de una curva de ajuste.
-title(strcat("$\\sigma = ",  num2str(sigma(1)),  "$ \\hspace{2.5mm}",
+xlabel("Muestra");
+ylabel("Frecuencia");
+
+% Si graficamos sólo una curva, mostrar los parámetros de esa curva
+% en el título del gráfico
+if(length(etiqueta) == 1)
+    title(strcat("$\\sigma = ",  num2str(sigma(1)),  "$ \\hspace{2.5mm}",
              "$\\beta = ",   num2str(beta(1)),   "$ \\hspace{2.5mm}",
              "$\\lambda = ", num2str(lambda(1)), "$"));
+
+% En caso contrario, mostramos la referencia de colores de las curvas
+else
+    legend(etiqueta);
+    legend("boxon");
+endif;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Gráfico - Fin                                                             %%

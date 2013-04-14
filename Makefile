@@ -46,22 +46,36 @@ graficos-referencia:
 graficos-comparativos:
 	./graficar --archivo newton-mantisas \
 	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_1) --muestra $(MUESTRA_MANTISAS)" \
+	           "$(MANTISA_1) bits" \
 	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_2) --muestra $(MUESTRA_MANTISAS)" \
-	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_3) --muestra $(MUESTRA_MANTISAS)"
+	           "$(MANTISA_2) bits" \
+	           "--metodo newton --p0 5 -e 0.001 -t $(MANTISA_3) --muestra $(MUESTRA_MANTISAS)" \
+	           "$(MANTISA_3) bits"
 	./graficar --archivo biseccion-mantisas \
 	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_1) --muestra $(MUESTRA_MANTISAS)" \
+	           "$(MANTISA_1) bits" \
 	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_2) --muestra $(MUESTRA_MANTISAS)" \
-	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_3) --muestra $(MUESTRA_MANTISAS)"
+	           "$(MANTISA_2) bits" \
+	           "--metodo biseccion --a0 1 --b0 100 -t $(MANTISA_3) --muestra $(MUESTRA_MANTISAS)" \
+	           "$(MANTISA_3) bits"
 	./graficar --archivo newton-criterios-parada \
 	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_1)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "Error absoluto $(PRECISION_1) bits" \
 	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_2)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "Error absoluto $(PRECISION_2) bits" \
 	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_1) -r --muestra $(MUESTRA_CRITERIOS_PARADA)" \
-	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA_CRITERIOS_PARADA)"
+	           "Error relativo $(PRECISION_1) bits" \
+	           "--metodo newton --p0 5 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "Error relativo $(PRECISION_2) bits"
 	./graficar --archivo biseccion-criterios-parada \
 	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "Error absoluto $(PRECISION_1) bits" \
 	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2)    --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "Error absoluto $(PRECISION_2) bits" \
 	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_1) -r --muestra $(MUESTRA_CRITERIOS_PARADA)" \
-	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA_CRITERIOS_PARADA)"
+	           "Error relativo $(PRECISION_1) bits" \
+	           "--metodo biseccion --a0 1 --b0 100 -t 51 -e $(PRECISION_2) -r --muestra $(MUESTRA_CRITERIOS_PARADA)" \
+	           "Error relativo $(PRECISION_2) bits"
 	mv *.eps *.tex tex
 
 clean-graficos:

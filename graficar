@@ -5,8 +5,16 @@
 # parámetros (sigma, beta, lambda). En el caso de proveer más de una tupla,
 # las curvas de ajuste se superponen sobre el histograma con distintos colores.
 #
-# Uso (única tupla):
+# Uso (única tuplaa):
 #   ./graficar [--pantalla | --archivo <nombre>] "[parametros del programa C++]"
+#
+# Uso (varias tuplas):
+#   ./graficar [--pantalla | --archivo <nombre>] \
+#              "[parametros del programa C++ tupla 1]" \
+#              "[Leyenda tupla 1]" \
+#              "[parametros del programa C++ tupla 2]" \
+#              "[Leyenda tupla 2]" \
+#              ...
 #
 # Opciones:
 #   --pantalla          Muestra el gráfico en una ventana
@@ -15,20 +23,19 @@
 # Notar que los parámetros de cada ejecución del programa C++ deben estar
 # encerrados entre comillas de manera de poder identificarlos individualmente.
 #
-# Uso (varias tuplas):
-#   ./graficar [--pantalla | --archivo <nombre>]
-#              "[parametros tupla 1]"  "[parametros tupla 2]" ...
-#
-# Los parámetros del programa C++ para cada una de las tuplas deben referir
-# a la misma muestra, de lo contrario se obtendrá una curva que ajusta al
-# histograma incorrecto.
+# En caso de graficar varias tuplas, los parámetros del programa C++ para cada
+# una de las tuplas deben referir a la misma muestra, de lo contrario se obtendrá
+# una curva que ajusta al histograma incorrecto.
 #
 # Ejemplos:
 # ./graficar --pantalla "--muestra data/X1.txt --metodo biseccion --a0 1 --b0 100"
 # ./graficar --archivo mi_grafico "--muestra data/X2.txt --metodo newton --p0 10"
 # ./graficar --pantalla "--muestra data/X3.txt --metodo newton --p0 10 -t 51" \
+#                       "51 bits de mantisa" \
 #                       "--muestra data/X3.txt --metodo newton --p0 10 -t 30" \
+#                       "30 bits de mantisa" \
 #                       "--muestra data/X3.txt --metodo newton --p0 10 -t 10" \
+#                       "10 bits de mantisa"
 
 import os
 import sys
@@ -44,19 +51,30 @@ if len(sys.argv) < 2 or \
 # Extraigo parámetros
 if sys.argv[1] == "--archivo":
     archivo    = sys.argv[2]
-    parametros = sys.argv[3:]
+    argumentos = sys.argv[3:]
 else:
     archivo    = ""
-    parametros = sys.argv[2:]
+    argumentos = sys.argv[2:]
 
-datos  = None
-tuplas = []
+datos     = None
+tuplas    = []
 
-# Obtengo cada tupla
-for p in parametros:
+# Proceso los argumentos del script
+while argumentos != []:
+    
+    # Obtengo los parametros del programa C++ para cada tupla
+    # y la etiqueta en el gráfico
+    if len(argumentos) >= 2:
+        parametros = argumentos[0]
+        etiqueta   = argumentos[1]
+        argumentos = argumentos[2:]
+    else:
+        parametros = argumentos[0]
+        etiqueta   = None
+        argumentos = argumentos[1:]
 
     # Ejecuto el programa C++ y me guardo la salida y codigo de estado
-    status, output = commands.getstatusoutput("./dgg --csv " + p)
+    status, output = commands.getstatusoutput("./dgg --csv " + parametros)
 
     # Si el programa C++ generó un error, muestro ayuda y termino el script
     if status != 0:
@@ -71,7 +89,9 @@ for p in parametros:
     if datos == None: datos = csv[0]
 
     # Extraigo la tupla
-    tuplas.append(csv[1:4])
+    tupla = csv[1:4]
+    if etiqueta != None: tupla.append(etiqueta)
+    tuplas.append(tupla)
 
 # Armo la llamada al script Octave
 comando = 'octave/graficar.m "%s" "%s" ' % (archivo, datos)
