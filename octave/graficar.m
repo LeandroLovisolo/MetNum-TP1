@@ -43,9 +43,9 @@ endwhile
 
 % Pendiente: mostrar etiquetas coloreadas en el gráfico cuando se tienen
 % más de una curva de ajuste.
-title(strcat("$\\sigma = ",  sigma(1),  "$ \\hspace{2.5mm}",
-             "$\\beta = ",   beta(1),   "$ \\hspace{2.5mm}",
-             "$\\lambda = ", lambda(1), "$"));
+title(strcat("$\\sigma = ",  num2str(sigma(1)),  "$ \\hspace{2.5mm}",
+             "$\\beta = ",   num2str(beta(1)),   "$ \\hspace{2.5mm}",
+             "$\\lambda = ", num2str(lambda(1)), "$"));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Gráfico - Fin                                                             %%
