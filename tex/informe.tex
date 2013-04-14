@@ -280,6 +280,9 @@ procedimos a explorar otras configuraciones.
 Decidimos probar con diferentes criterios de parada como el error absoluto o el error relativo. Para el máximo error
 tolerado elegimos los valores 0.1, 0.01 y 0.001 ya que una tolerancia de 0.1 podría mostrar diferencias significativas entre 0.01 y 0.001. Por último, decidimos probar con diferentes cantidades de bits de precisión en la mantisa, elegimos 51,30,10, para poder tener un valor de alta presición, media y baja con el cuál experimentar.
 
+Al experimentar con las mantisas de 51, 30 y 10 bits vimos que el método de Newton divergía en todas las muestras con 10 bits y que bisección daba valores erroneos para la misma cantidad de bits. También 30 bits no mostraba diferencias significativas, decidimos volver a realizar los experimentos con 51 bits para tener un valor alto de precisión, 20 bits ya que alrededor de los 20 bits comienza a notarse una diferencia en la aproximación de los parámetros y 15 bits ya que buscamos el mínimo tamaño de mantisa tal que todas las muestras convergen a algun cero.
+
+Por último comparamos las muestras usando todas las combinaciones de mantisas y criterios de parada para elegir las que mejor ilustran las diferencias de estos ajustes y creamos los gráficos comparativos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Resultados                                                                %%
