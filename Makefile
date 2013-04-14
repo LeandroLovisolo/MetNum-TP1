@@ -118,9 +118,40 @@ csv-newton:
 clean-csvs:
 	rm tex/*.csv
 
+
+###############################################################################
+# Informe                                                                     #
+###############################################################################
+
+bundle:
+	if [ -f dgg ] ; \
+	then \
+		make clean ; \
+	fi ;
+	if [ -f tex/informe.pdf ] ; \
+	then \
+     		tar -zcvf bundle.tar.gz {src,data,Makefile,tex/informe.pdf} ; \
+	else \
+		cd tex && pdflatex informe.tex ;\
+		cd .. && tar -zcvf bundle.tar.gz {src,data,Makefile,tex/informe.pdf} ; \
+	fi;
+
+clean-bundle:
+	rm bundle.tar.gz
+
+clean-informe:
+	rm tex/informe.pdf
+	rm tex/informe.toc
+	rm tex/informe.aux
+	rm tex/informe.log
+
+informe:
+	cd tex && pdflatex informe.tex
+
 ###############################################################################
 # Misc                                                                        #
 ###############################################################################
+
 
 all-all: all graficos csvs
 
