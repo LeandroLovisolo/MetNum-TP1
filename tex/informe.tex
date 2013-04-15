@@ -245,7 +245,7 @@ La problemática central en este trabajo yace en hallar un valor para el
 parámetro $\beta$, que es imposible de despejar de la ecuación (4) por medio de
 manipulación algebráica. Sin embargo, es posible aproximar el parámetro $\beta$
 haciendo uso de métodos de aproximación numérica y a partir de éste hallar
-aproximaciones de los parametros restantes que ajustan a la muestra de forma
+aproximaciones de los parámetros restantes que ajustan a la muestra de forma
 excelente.
 
 Los métodos que exploramos son el \emph{método de bisección} \cite{burden}[p.~48]
@@ -419,15 +419,36 @@ Resultados con distintas precisiones y cotas de error usando  método de bisecci
 
 \section{Discusión}
 
-\subsection{Variaciones de cotas}
-Utilizando la tolerancia de 0.001 obtuvimos las mejores aproximaciones. La diferencia entre las precisiones de una tolerancia de 0.01 y 0.001 no fueron muy significativas a comparación de la utilización de la tolerancia 0.1 que muestra por ejemplo, en la muestra 3 del método de bisección un $\sigma$ de 3.12601 mientras que para 0.01 es de 3.50501. \\
-Observamos también que en ambos métodos, una tolerancia mas pequeña muestra una mayor cantidad de iteraciones.
+Analizamos a continuación las diferencias observadas al variar métodos, cotas
+de error, criterios de parada y bits de precisión de mantisa.
 
-\subsubsection{Criterios de paradas}
-Entre el criterio de error absoluto y el de error relativo no encontramos diferencias significativas en la precisión de la estimación de parámetros pero puede verse, en especial en el método de bisección que se reduce un poco la cantidad de iteraciones.
 
-\subsubsection{Variación de bits de mantisa}
-Analizando los resultados tanto del método de Newton como el de bisección pueden verse pequeñas diferencias entre las mantisas de 51 y 20 bits y una diferencia más notable con 15 bits de mantisa. Puede verse en los gráficos 8 y 9 cómo la curva magenta (15 bits) aproxima de manera menos exacta que 51 y 20 bits y que la curva roja (20 bits) tiene una pequeña diferencia con la curva azúl (51 bits).
+\subsection{Métodos de aproximación}
+Para precisión de mantisa alta y cota de error chica, se observa una muy pequeña
+mejora en el ajuste al aproximar con Newton, practicamente indistinguible a simple
+vista. Sin embargo la brecha en el ajuste se hace más notable al decrementar
+los parámetros mencionados. Ver figuras 8, 9, 10 y 11.
+
+En la mayoría de los casos el método de bisección requiere una mayor cantidad
+de iteraciones, a veces más del doble que la requeida por Newton.
+
+
+\subsection{Criterios de parada y cotas de error}
+Observamos una mejora numérica notable comparando las cotas de error absoluto 0.1 y 0.01,
+pero prácticamente despreciable comparando con 0.001. Sin embargo, el ajuste
+obtenido con cota 0.1 es excelente, y decrementar la cota produce cambios en
+el ajuste casi indistinguibles a simple vista. Lo mismo ocurre con cotas de error relativo.
+
+La figura 10 ilustra la diferencia de ajuste con cotas de error relativo 0.1 vs 0.001,
+donde la diferencia entre las curvas es pequeñísima, sin embargo los parámetros
+$\beta$ obtenidos difieren mucho entre sí: 4.48047 vs 4.12698, respectivamente.
+
+
+\subsection{Bits de precisión en mantisa}
+No observamos mejoras significativas de ajuste al incrementar la precisión de
+la mantisa por encima de 20 bits. Sin embargo, observamos gran deterioro en el
+ajuste al emplear mantisas de menos de 15 bits, claramente visible en las figuras
+8 y 9.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -437,13 +458,22 @@ Analizando los resultados tanto del método de Newton como el de bisección pued
 
 \section{Conclusiones}
 
-Como conclusión, podemos determinar que los métodos utilizados, tanto Newton como bisección aproximan a los parámetros de la función gamma con una buena precisión siempre y cuando los bits de la mantisa no bajen de 20, concluyendo en que es posible la utilización de menos memoria a la hora de realizar los cálculos, por ejemplo, un cambio de double a float (32 bits) daría una aproximación tan buena como usar un double y se estaría usando la mitad de memoria. Los cambios en la tolerancia y los criterios de paradas no generan un cambio significativo.
+Determinamos que tanto el método de bisección como Newton son suficientes para
+alcanzar aproximaciones adecuadas.
 
-Queda en evidencia la eficacia del método de newton por sobre el de bisección en cantidad de iteraciones.
+Observamos que la configuración que minimiza el número de iteraciones y la
+cantidad requerida de bits de precisiónde mantisa para el corpus analizado es
+aplicar Newton con 20 bits de precisión y cota de error absoluto 0.1.
 
-Concluimos también en que es una buena práctica aplicar el método de bisección como primera aproximación, para poder luego utilizar un punto inicial cercano a la raíz que converga utilizando el método de Newton. Una vez encontrado el punto inicial que converge a un valor del parámetro $\beta$ que dé una buena aproximación, es recomendable utilizar el método de Newton si se necesita una aplicación rutinaria debido a su orden de convergencia cuadrático.
+No observamos mejoras significativas al aumentar la precisión de mantisa o
+decrementar la cota de error.
 
-Queda pendiente la aplicación de otros algoritmos como regula falsi o el método de la secante y analizar como se comportan ante el problema.
+Encontramos un enfoque híbrido aplicando inicialmente bisección con una cota de
+error grosera para hallar una aproximación inicial, para luego aplicar Newton y
+mejorar las chances de converger a una solución.
+
+Finalmente, nos queda pendiente explorar otros  métodos de aproximación existentes
+(ej: método de la secante y regula falsi.)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
