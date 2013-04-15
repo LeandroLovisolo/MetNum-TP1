@@ -299,16 +299,16 @@ $\beta_0 = 10$ y manteniendo los mismos criterios de parada y precisión.
 
 Observamos que el método converge a soluciones muy similares a las del
 experimento inicial luego de 7 iteraciones en promedio, a excepción de la
-muestra X3. Con esta última, el método converge a un valor muy pequeño de
+muestra 3. Con esta última, el método converge a un valor muy pequeño de
 $\beta$ que efectivamente anula la ecuación (4) pero no ajusta al histograma
 de la muestra.
 
-Para remendar esta situación, repetimos el experimento sobre la muestra X3
+Para remendar esta situación, repetimos el experimento sobre la muestra 3
 tomando como aproximación inicial la parte entera del valor de $\beta$ hallado
 con el método de bisección. Observamos convergencia a una solución correcta
 luego de 5 iteraciones.
 
-Probando un poco más con la muestra X3, vimos que también convergía a una solución correcta con $p_0 = 5$, realizamos la prueba con las demás muestras y vimos que estas también lo hacían, por lo que fijamos un $p_0$ fijo para nuestros experimentos en $p_0$ = 5.
+Probando un poco más con la muestra 3, vimos que también convergía a una solución correcta con $p_0 = 5$, realizamos la prueba con las demás muestras y vimos que estas también lo hacían, por lo que fijamos un $p_0$ fijo para nuestros experimentos en $p_0$ = 5.
 
 Una vez hallados los parámetros de las distribuciones de cada muestra y un
 conjunto de puntos de partida para los métodos que decidimos aplicar,
@@ -337,13 +337,13 @@ A continuación presentamos el ajuste obtenido con la configuración que result�
            {Muestra & $\sigma$ & $\beta$ & $\lambda$}
            {\nombremuestra{\Muestra} & \Sigma & \Beta & \Lambda}
 
-\grafico{referencia-1.tex}{Muestra X1}
-\grafico{referencia-2.tex}{Muestra X2}
-\grafico{referencia-3.tex}{Muestra X3}
-\grafico{referencia-4.tex}{Muestra X4}
-\grafico{referencia-5.tex}{Muestra X5}
-\grafico{referencia-6.tex}{Muestra X6}
-\grafico{referencia-7.tex}{Muestra X7}
+\grafico{referencia-1.tex}{Muestra 1}
+\grafico{referencia-2.tex}{Muestra 2}
+\grafico{referencia-3.tex}{Muestra 3}
+\grafico{referencia-4.tex}{Muestra 4}
+\grafico{referencia-5.tex}{Muestra 5}
+\grafico{referencia-6.tex}{Muestra 6}
+\grafico{referencia-7.tex}{Muestra 7}
 
 \newcommand{\csvmuestra}[1]{
     \incluircsv{#1}
@@ -401,18 +401,18 @@ Resultados con distintas precisiones y cotas de error usando  método de Newton.
 \subsubsection{Muestra 7}
 \csvmuestra{    newton-7.csv}
 
-\subsection{Graficos comparativos}
+\subsection{Gráficos comparativos}
 Las siguientes figuras ilustran distintos ajustes obtenidos haciendo variar algunos parámetros.
 
 \subsubsection{Distintas precisiones de mantisa}
 
-\grafico{biseccion-mantisas.tex}{Muestra X1: Método de Bisección}
-\grafico{newton-mantisas.tex}{Muestra X1: Método de Newton}
+\grafico{biseccion-mantisas.tex}{Muestra 1: Método de Bisección}
+\grafico{newton-mantisas.tex}{Muestra 1: Método de Newton}
              
 \subsubsection{Distintos criterios de parada}
 
-\grafico{biseccion-criterios-parada.tex}{Muestra X2: Método de Bisección}
-\grafico{newton-criterios-parada.tex}{Muestra X2: Método de Newton}
+\grafico{biseccion-criterios-parada.tex}{Muestra 2: Método de Bisección}
+\grafico{newton-criterios-parada.tex}{Muestra 2: Método de Newton}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
