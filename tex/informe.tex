@@ -308,20 +308,34 @@ tomando como aproximación inicial la parte entera del valor de $\beta$ hallado
 con el método de bisección. Observamos convergencia a una solución correcta
 luego de 5 iteraciones.
 
-Probando un poco más con la muestra 3, vimos que también convergía a una solución correcta con $p_0 = 5$, realizamos la prueba con las demás muestras y vimos que estas también lo hacían, por lo que fijamos un $p_0$ fijo para nuestros experimentos en $p_0$ = 5.
+Probando un poco más con la muestra 3, vimos que también convergía a una
+solución correcta con $p_0 = 5$, realizamos la prueba con las demás muestras
+y vimos que estas también lo hacían, por lo que fijamos un $p_0$ fijo para
+nuestros experimentos en $p_0$ = 5.
 
 Una vez hallados los parámetros de las distribuciones de cada muestra y un
 conjunto de puntos de partida para los métodos que decidimos aplicar,
 procedimos a explorar otras configuraciones. 
 
-Decidimos probar con diferentes criterios de parada como el error absoluto o el error relativo. Para el máximo error
-tolerado elegimos los valores 0.1, 0.01 y 0.001 ya que una tolerancia de 0.1 podría mostrar diferencias significativas entre 0.01 y 0.001. Por último, decidimos probar con diferentes cantidades de bits de precisión en la mantisa, elegimos 51,30,10, para poder tener un valor de alta precisión, media y baja con el cuál experimentar.
+Evaluamos inicialmente cotas de error absoluto y relativo de 0.001, 0.01 y 0.1, y mantisas
+de precisión de 51, 30 y 10 bits, de manera de tener una opción fina, regular y
+grosera para cada valor.
 
-Al experimentar con las mantisas de 51, 30 y 10 bits vimos que el método de Newton divergía en todas las muestras con 10 bits y que bisección daba valores erróneos para la misma cantidad de bits. También 30 bits no mostraba diferencias significativas, decidimos volver a realizar los experimentos con 51 bits para tener un valor alto de precisión, 20 bits ya que alrededor de los 20 bits comienza a verse una diferencia en la aproximación de los parámetros y 15 bits ya que buscamos el mínimo tamaño de mantisa tal que todas las muestras convergen a algún cero.
+Observamos que para mantisas de 10 bits, el método de Newton divergía con todas
+las muestra, y el método de bisección producía valores erróneos. Además,
+no observamos diferencias notables con mantisas de 30 bits, por lo cual reducimos
+esa precisión hasta empezar a ver diferencias significativas. Por estos motivos
+nos decidimos por valores de 51, 20 y 15 bits para los sucesivos experimentos.
 
-Realizamos las pruebas y al encontrar valores muy similares con las mayores precisiones de ambos métodos escogimos el método de Newton con tolerancia 0.001 y 51 bits de mantisa para plasmar en los gráficos como estos parámetros obtenidos aproximaban el histograma.
+Realizamos las pruebas y al encontrar valores muy similares con las mayores precisiones
+de ambos métodos escogimos el método de Newton con cota de error absoluta 0.001 y 51 bits de mantisa
+para plasmar en los gráficos cómo estos parámetros obtenidos aproximan la muestra.
 
-Por último comparamos las muestras usando todas las combinaciones de mantisas y criterios de parada para elegir las que mejor ilustran las diferencias de estos ajustes y creamos los gráficos comparativos.
+Por último, comparamos las muestras usando todas las combinaciones de mantisas y criterios
+de parada para elegir las que mejor ilustran las diferencias de estos ajustes, y
+generamos gráficos comparativos dibujando las curvas de ajuste para distintos valores
+sobre el mismo histograma.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Resultados                                                                %%
@@ -330,7 +344,8 @@ Por último comparamos las muestras usando todas las combinaciones de mantisas y
 
 \section{Resultados}
 
-A continuación presentamos el ajuste obtenido con la configuración que resultó ser más precisa mostrando la eficacia de los métodos.
+A continuación presentamos el ajuste obtenido con la configuración que resultó ser más precisa:
+Newton con mantisa de 51 bits de precisión, y cota de error absoluto 0.001.
 
 \incluircsv{referencia.csv}
            {|c|c|c|c|}
@@ -560,11 +575,29 @@ El archivo contiene en la primer l\'inea la cantidad de datos, y en la l\'inea s
 
 
 \section{Apéndice B: Código Fuente}
-\subsection{Compilación y uso}
-Para compilar el trabajo práctico usar en el directorio raíz: \emph{make} \\
-Una vez compilado, ejecutar a \emph{./dgg} para ver la ayuda.
+
+
+\subsection{Requerimientos}
+
+Compilador g++ y GNU Make.
+
+
+\subsection{Instrucciones}
+
+Compilar el programa ejecutando \texttt{make} en el directorio raíz del proyecto.
+
+Luego de compilar, tipear \texttt{./dgg} en el directorio raíz para invocar el
+binario y obtener ayuda en pantalla.
+
+
+\subsection{Metodos.h}
+\lstinputlisting[language=C++]{../src/Metodos.h}
+
+
 \subsection{Metodos.cpp}
 \lstinputlisting[language=C++]{../src/Metodos.cpp}
+
+
 \subsection{Ecuaciones.cpp}
 \lstinputlisting[language=C++]{../src/Ecuaciones.cpp}
 
