@@ -253,13 +253,16 @@ y el \emph{método de Newton} \cite{burden}[p.~67], que introducimos a continuac
 
 
 \subsection{Método de bisección}
-Teniendo una función $f(x)$ contínua en $[a,b]$ y $f(a).f(b) < 0$, es posible utilizar el Teorema del Valor Medio el cuál bajo estas hipótesis afirma la existencia de $c \in (a,b)$ tal que $f(c) = 0$. Conociento la existencia de este c, se puede aplicar el método de bisección el cuál consiste en la división del intervalo [a,b] por su mitad (m) sucesivamente hasta conseguir un m para el cuál $f(m)$ sea 0 o lo suficientemente cercano al cero según el criterio de parada utilizado.
-Para eligir el próximo intervalo sobre el cuál volver a realizar el procedimiento en cada iteración, se utiliza el siguiente criterio: \\
-Si $f(m) = 0$ entonces ya tenemos el m que se buscaba. \\
-Si $f(a).f(m) < 0$ entonces se utiliza el intervalo $[a,m]$, si no, se utiliza $[m,b]$.
+Teniendo una función $f(x)$ contínua en $[a,b]$ con $f(a).f(b) < 0$, es posible utilizar el Teorema del Valor Intermedio, el cual bajo estas hipótesis afirma la existencia de $c \in (a,b)$ tal que $f(c) = 0$. Conociendo la existencia de este c, se puede aplicar el método de bisección el cuál consiste en la división del intervalo [a,b] por su mitad (m) sucesivamente hasta conseguir un m para el cuál $f(m)$ sea 0 o lo suficientemente cercano al cero según el criterio de parada utilizado.
+Para eligir el próximo intervalo sobre el cuál volver a realizar el procedimiento en cada iteración, se utiliza el siguiente criterio:
+
+\begin{itemize}
+    \item Si $f(m) = 0$ entonces ya tenemos el m que se buscaba.
+    \item Si $f(a).f(m) < 0$ entonces se utiliza el intervalo $[a,m]$, si no, se utiliza $[m,b]$.
+\end{itemize}
 
 \subsection{Método de Newton}
-Teniendo $f \in C^2[a,b]$ y $p_0 \in [a, b]$ siendo $p_0$ una aproximación al valor p buscado tal que $f'(p_0) \neq 0$, se toma la recta tangente a $f(x)$ en $p_0$ y al intersecarse con la recta $x = 0$ se obtiene el próximo x0 con el cuál volver a repetir la operación hasta encontrarse con alguna de las cotas establecidas para el algoritmo. \\
+Teniendo $f \in C^2[a,b]$ y $p_0 \in [a, b]$ siendo $p_0$ una aproximación al valor p buscado tal que $f'(p_0) \neq 0$, se toma la recta tangente a $f(x)$ en $p_0$ y al intersecarse con la recta $x = 0$ se obtiene el próximo $x_0$ con el cual volver a repetir la operación hasta encontrarse con alguna de las cotas establecidas para el algoritmo. \\
 El algoritmo es el siguiente: 
 \begin{equation*}
 	p_n = p_{n-1} - \frac{f(p_{n-1})}{f'(p_{n-1})} , \qquad \text{para n} \geq 1
