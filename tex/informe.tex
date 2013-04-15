@@ -313,9 +313,11 @@ conjunto de puntos de partida para los métodos que decidimos aplicar,
 procedimos a explorar otras configuraciones. 
 
 Decidimos probar con diferentes criterios de parada como el error absoluto o el error relativo. Para el máximo error
-tolerado elegimos los valores 0.1, 0.01 y 0.001 ya que una tolerancia de 0.1 podría mostrar diferencias significativas entre 0.01 y 0.001. Por último, decidimos probar con diferentes cantidades de bits de precisión en la mantisa, elegimos 51,30,10, para poder tener un valor de alta presición, media y baja con el cuál experimentar.
+tolerado elegimos los valores 0.1, 0.01 y 0.001 ya que una tolerancia de 0.1 podría mostrar diferencias significativas entre 0.01 y 0.001. Por último, decidimos probar con diferentes cantidades de bits de precisión en la mantisa, elegimos 51,30,10, para poder tener un valor de alta precisión, media y baja con el cuál experimentar.
 
-Al experimentar con las mantisas de 51, 30 y 10 bits vimos que el método de Newton divergía en todas las muestras con 10 bits y que bisección daba valores erroneos para la misma cantidad de bits. También 30 bits no mostraba diferencias significativas, decidimos volver a realizar los experimentos con 51 bits para tener un valor alto de precisión, 20 bits ya que alrededor de los 20 bits comienza a notarse una diferencia en la aproximación de los parámetros y 15 bits ya que buscamos el mínimo tamaño de mantisa tal que todas las muestras convergen a algun cero.
+Al experimentar con las mantisas de 51, 30 y 10 bits vimos que el método de Newton divergía en todas las muestras con 10 bits y que bisección daba valores erróneos para la misma cantidad de bits. También 30 bits no mostraba diferencias significativas, decidimos volver a realizar los experimentos con 51 bits para tener un valor alto de precisión, 20 bits ya que alrededor de los 20 bits comienza a verse una diferencia en la aproximación de los parámetros y 15 bits ya que buscamos el mínimo tamaño de mantisa tal que todas las muestras convergen a algún cero.
+
+Realizamos las pruebas y al encontrar valores muy similares con las mayores precisiones de ambos métodos escogimos el método de Newton con tolerancia 0.001 y 51 bits de mantisa para plasmar en los gráficos como estos parámetros obtenidos aproximaban el histograma.
 
 Por último comparamos las muestras usando todas las combinaciones de mantisas y criterios de parada para elegir las que mejor ilustran las diferencias de estos ajustes y creamos los gráficos comparativos.
 
@@ -326,8 +328,7 @@ Por último comparamos las muestras usando todas las combinaciones de mantisas y
 
 \section{Resultados}
 
-Incluimos a continuación los parámetros hallados para cada muestra junto
-con sus respectivos gráficos (histograma y ajuste.)
+A continuación presentamos el ajuste obtenido con la configuración que resultó ser más precisa mostrando la eficacia de los métodos.
 
 \incluircsv{referencia.csv}
            {|c|c|c|c|}
@@ -342,8 +343,6 @@ con sus respectivos gráficos (histograma y ajuste.)
 \grafico{referencia-6.tex}{Muestra X6}
 \grafico{referencia-7.tex}{Muestra X7}
 
-Resultados con distintas precisiones y cotas de error usando  método de bisección:
-
 \newcommand{\csvmuestra}[1]{
     \incluircsv{#1}
                {|c|c|c|c|c|c|c|}
@@ -352,6 +351,7 @@ Resultados con distintas precisiones y cotas de error usando  método de bisecci
 }
 
 \subsection{Método de bisección}
+Resultados con distintas precisiones y cotas de error usando  método de bisección.
 
 \subsubsection{Muestra 1}
 \csvmuestra{ biseccion-1.csv}
@@ -376,6 +376,7 @@ Resultados con distintas precisiones y cotas de error usando  método de bisecci
 
 
 \subsection{Método de Newton}
+Resultados con distintas precisiones y cotas de error usando  método de Newton.
 
 \subsubsection{Muestra 1}
 \csvmuestra{    newton-1.csv}
@@ -398,8 +399,8 @@ Resultados con distintas precisiones y cotas de error usando  método de bisecci
 \subsubsection{Muestra 7}
 \csvmuestra{    newton-7.csv}
 
-
 \subsection{Graficos comparativos}
+Las siguientes figuras ilustran distintos ajustes obtenidos haciendo variar algunos parámetros.
 
 \subsubsection{Distintas precisiones de mantisa}
 
@@ -449,6 +450,8 @@ No observamos mejoras significativas de ajuste al incrementar la precisión de
 la mantisa por encima de 20 bits. Sin embargo, observamos gran deterioro en el
 ajuste al emplear mantisas de menos de 15 bits, claramente visible en las figuras
 8 y 9.
+
+\subsection{Graficos comparativos}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
