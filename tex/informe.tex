@@ -239,8 +239,6 @@ El algoritmo es el siguiente:
 	p_n = p_{n-1} - \frac{f(p_{n-1})}{f'(p_{n-1})} , \qquad \text{para n} \geq 1
 \end{equation*}
 El algoritmo sólo puede asegurar convergencia si $f \in C^2[a,b] \land p \in (a,b)$ tal que $f(p) = 0 \land f'(p) \neq 0$ el método genera una sucesión convergente a p para cualquier $p_0$ inicial lo suficientemente cercano a p, es decir $p_0 \in [p-\delta,p+\delta]$.
-
-El orden de convergencia del método es cuadrático.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Desarrollo                                                                %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -408,7 +406,13 @@ Analizando los resultados tanto del método de Newton como el de bisección pued
 
 \section{Conclusiones}
 
-\blindtext
+Como conclusión, podemos determinar que los métodos utilizados, tanto Newton como bisección aproximan a los parámetros de la función gamma con una buena precisión siempre y cuando los bits de la mantisa no bajen de 20, concluyendo en que es posible la utilización de menos memoria a la hora de realizar los cálculos, por ejemplo, un cambio de double a float (32 bits) daría una aproximación tan buena como usar un double y se estaría usando la mitad de memoria. Los cambios en la tolerancia y los criterios de paradas no generan un cambio significativo.
+
+Queda en evidencia la eficacia del método de newton por sobre el de bisección en cantidad de iteraciones.
+
+Concluimos también en que es una buena práctica aplicar el método de bisección como primera aproximación, para poder luego utilizar un punto inicial cercano a la raíz que converga utilizando el método de Newton. Una vez encontrado el punto inicial que converge a un valor del parámetro $\beta$ que dé una buena aproximación, es recomendable utilizar el método de Newton si se necesita una aplicación rutinaria debido a su orden de convergencia cuadrático.
+
+Queda pendiente la aplicación de otros algoritmos como regula falsi o el método de la secante y analizar como se comportan ante el problema.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
