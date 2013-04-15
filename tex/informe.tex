@@ -229,19 +229,44 @@ numérico (bisección y Newton) para aproximar una solución con un margen de er
 
 \section{Introducción Teórica}
 
-\subsection{Bisección}
+El objetivo de este trabajo es presentar un método para la aproximación de los
+parámetros de una muestra que sigue la Distribución Gamma Generalizada
+\footnote{Ver http://en.wikipedia.org/wiki/Generalized\_gamma\_distribution.}.
+
+Esta distribución depende de tres parámetros $\sigma$, $\beta$ y $\lambda$ que siguen
+las ecuaciones (1), (2) y (3) presentadas en el apéndice A.
+
+Aplicando cálculo de momentos se obtiene la ecuación (4), una expresión para
+el parámetro $\beta$ que sólo depende de la muestra. Hallando el valor de $\beta$
+a partir de la ecuación (4) se pueden obtener fácilmente los valores de $\sigma$
+y $\lambda$ reemplazando $\beta$ en las ecuaciones (1) y (2), respectivamente.
+
+La problemática central en este trabajo yace en hallar un valor para el
+parámetro $\beta$, que es imposible de despejar de la ecuación (4) por medio de
+manipulación algebráica. Sin embargo, es posible aproximar el parámetro $\beta$
+haciendo uso de métodos de aproximación numérica y a partir de éste hallar
+aproximaciones de los parametros restantes que ajustan a la muestra de forma
+excelente.
+
+Los métodos que exploramos son el \emph{método de bisección} \cite{burden}[p.~48]
+y el \emph{método de Newton} \cite{burden}[p.~67], que introducimos a continuación.
+
+
+\subsection{Método de bisección}
 Teniendo una función $f(x)$ contínua en $[a,b]$ y $f(a).f(b) < 0$, es posible utilizar el Teorema del Valor Medio el cuál bajo estas hipótesis afirma la existencia de $c \in (a,b)$ tal que $f(c) = 0$. Conociento la existencia de este c, se puede aplicar el método de bisección el cuál consiste en la división del intervalo [a,b] por su mitad (m) sucesivamente hasta conseguir un m para el cuál $f(m)$ sea 0 o lo suficientemente cercano al cero según el criterio de parada utilizado.
 Para eligir el próximo intervalo sobre el cuál volver a realizar el procedimiento en cada iteración, se utiliza el siguiente criterio: \\
 Si $f(m) = 0$ entonces ya tenemos el m que se buscaba. \\
 Si $f(a).f(m) < 0$ entonces se utiliza el intervalo $[a,m]$, si no, se utiliza $[m,b]$.
 
-\subsection{Newton}
+\subsection{Método de Newton}
 Teniendo $f \in C^2[a,b]$ y $p_0 \in [a, b]$ siendo $p_0$ una aproximación al valor p buscado tal que $f'(p_0) \neq 0$, se toma la recta tangente a $f(x)$ en $p_0$ y al intersecarse con la recta $x = 0$ se obtiene el próximo x0 con el cuál volver a repetir la operación hasta encontrarse con alguna de las cotas establecidas para el algoritmo. \\
 El algoritmo es el siguiente: 
 \begin{equation*}
 	p_n = p_{n-1} - \frac{f(p_{n-1})}{f'(p_{n-1})} , \qquad \text{para n} \geq 1
 \end{equation*}
 El algoritmo sólo puede asegurar convergencia si $f \in C^2[a,b] \land p \in (a,b)$ tal que $f(p) = 0 \land f'(p) \neq 0$ el método genera una sucesión convergente a p para cualquier $p_0$ inicial lo suficientemente cercano a p, es decir $p_0 \in [p-\delta,p+\delta]$.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Desarrollo                                                                %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -490,8 +515,8 @@ El archivo contiene en la primer l\'inea la cantidad de datos, y en la l\'inea s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Apéndice B: Código Fuente Y Uso}
-\subsection{Compilaci\'on y uso}
+\section{Apéndice B: Código Fuente}
+\subsection{Compilación y uso}
 Para compilar el trabajo práctico usar en el directorio raíz: \emph{make} \\
 Una vez compilado, ejecutar a \emph{./dgg} para ver la ayuda.
 \subsection{Metodos.cpp}
