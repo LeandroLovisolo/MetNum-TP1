@@ -15,8 +15,11 @@
 \usepackage{xstring}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{tocbibind}
 
 
+% Evita que el documento se estire verticalmente para ocupar
+% el espacio vacío en cada página.
 \raggedbottom
 
 
@@ -495,4 +498,21 @@ Una vez compilado, ejecutar a \emph{./dgg} para ver la ayuda.
 \lstinputlisting[language=C++]{../src/Metodos.cpp}
 \subsection{Ecuaciones.cpp}
 \lstinputlisting[language=C++]{../src/Ecuaciones.cpp}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliografía                                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{thebibliography}{1}
+    \bibitem[Burden2010]{burden}
+        Richard L. Burden,
+        J. Douglas Faires,
+        \emph{Numerical Analysis}.
+        Brooks/Cole,
+        Ninth Edition,
+        2010.
+\end{thebibliography}
+
 \end{document}
