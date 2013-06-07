@@ -293,6 +293,17 @@ Una vez hallado $\beta$, despejamos los parámetros $\sigma$ y $\lambda$ y
 dibujamos el histograma y función de densidad superpuestos. Se observa
 excelente ajuste en todas las muestras.
 
+Realizamos un estudio de función para corroborar que los $\beta$ obtenidos fueran los buscados.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{estudioFuncion.png}
+\end{figure}
+Para poder apreciar correctamente el funcionamiento de los métodos, nos centramos en los ceros de la función.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{estudioFuncionZoom.png}
+\end{figure}
+
 Siguiendo un razonamiento similar, modificamos el experimento anterior,
 esta vez aplicando el método de Newton, tomando como aproximación inicial
 $\beta_0 = 10$ y manteniendo los mismos criterios de parada y precisión.
@@ -352,13 +363,14 @@ Newton con mantisa de 51 bits de precisión, y cota de error absoluto 0.001.
            {Muestra & $\sigma$ & $\beta$ & $\lambda$}
            {\nombremuestra{\Muestra} & \Sigma & \Beta & \Lambda}
 
+
 \grafico{referencia-1.tex}{Muestra 1}
-\grafico{referencia-2.tex}{Muestra 2}
+%\grafico{referencia-2.tex}{Muestra 2}
 \grafico{referencia-3.tex}{Muestra 3}
-\grafico{referencia-4.tex}{Muestra 4}
-\grafico{referencia-5.tex}{Muestra 5}
-\grafico{referencia-6.tex}{Muestra 6}
-\grafico{referencia-7.tex}{Muestra 7}
+%\grafico{referencia-4.tex}{Muestra 4}
+%\grafico{referencia-5.tex}{Muestra 5}
+%\grafico{referencia-6.tex}{Muestra 6}
+%\grafico{referencia-7.tex}{Muestra 7}
 
 \newcommand{\csvmuestra}[1]{
     \incluircsv{#1}
@@ -373,23 +385,23 @@ Resultados con distintas precisiones y cotas de error usando  método de bisecci
 \subsubsection{Muestra 1}
 \csvmuestra{ biseccion-1.csv}
 
-\subsubsection{Muestra 2}
-\csvmuestra{ biseccion-2.csv}
+%\subsubsection{Muestra 2}
+%\csvmuestra{ biseccion-2.csv}
 
 \subsubsection{Muestra 3}
 \csvmuestra{ biseccion-3.csv}
 
-\subsubsection{Muestra 4}
-\csvmuestra{ biseccion-4.csv}
+%\subsubsection{Muestra 4}
+%\csvmuestra{ biseccion-4.csv}
 
-\subsubsection{Muestra 5}
-\csvmuestra{ biseccion-5.csv}
+%\subsubsection{Muestra 5}
+%\csvmuestra{ biseccion-5.csv}
 
-\subsubsection{Muestra 6}
-\csvmuestra{ biseccion-6.csv}
+%\subsubsection{Muestra 6}
+%\csvmuestra{ biseccion-6.csv}
 
-\subsubsection{Muestra 7}
-\csvmuestra{ biseccion-7.csv}
+%\subsubsection{Muestra 7}
+%\csvmuestra{ biseccion-7.csv}
 
 
 \subsection{Método de Newton}
@@ -398,23 +410,23 @@ Resultados con distintas precisiones y cotas de error usando  método de Newton.
 \subsubsection{Muestra 1}
 \csvmuestra{    newton-1.csv}
 
-\subsubsection{Muestra 2}
-\csvmuestra{    newton-2.csv}
+%\subsubsection{Muestra 2}
+%\csvmuestra{    newton-2.csv}
 
 \subsubsection{Muestra 3}
 \csvmuestra{    newton-3.csv}
 
-\subsubsection{Muestra 4}
-\csvmuestra{    newton-4.csv}
+%\subsubsection{Muestra 4}
+%\csvmuestra{    newton-4.csv}
 
-\subsubsection{Muestra 5}
-\csvmuestra{    newton-5.csv}
+%\subsubsection{Muestra 5}
+%\csvmuestra{    newton-5.csv}
 
-\subsubsection{Muestra 6}
-\csvmuestra{    newton-6.csv}
+%\subsubsection{Muestra 6}
+%\csvmuestra{    newton-6.csv}
 
-\subsubsection{Muestra 7}
-\csvmuestra{    newton-7.csv}
+%\subsubsection{Muestra 7}
+%\csvmuestra{    newton-7.csv}
 
 \subsection{Gráficos comparativos}
 Las siguientes figuras ilustran distintos ajustes obtenidos haciendo variar algunos parámetros.
