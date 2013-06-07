@@ -31,7 +31,11 @@ MANTISA_3                = 15
 PRECISION_1              = 0.001
 PRECISION_2              = 0.1
 
-graficos: graficos-referencia graficos-comparativos
+graficos: graficos-ecuacion-4 graficos-referencia graficos-comparativos
+
+graficos-ecuacion-4:
+	./graficar-ecuacion-4
+	mv octave/*.eps octave/*.tex tex
 
 graficos-referencia:
 	./graficar --archivo referencia-1 "--metodo newton --p0 5 --muestra data/X1.txt"

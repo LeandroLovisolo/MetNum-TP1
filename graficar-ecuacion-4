@@ -1,0 +1,17 @@
+#!/usr/bin/octave -qf
+
+source('octave/graficarEcuacion4.m')
+source('octave/leer_datos.m')
+
+cd('octave')
+
+% Gráfico de la función completa
+graficarEcuacion4()
+print('grafico-ecuacion-4', '-S800,550', '-dtex')
+
+% Cierro el gráfico anterior para evitar que se vea la ventana del plot.
+close()
+
+% Gráfico de la función centrada en los ceros
+graficarEcuacion4(true)
+print('grafico-ecuacion-4-zoom', '-S800,550', '-dtex')
