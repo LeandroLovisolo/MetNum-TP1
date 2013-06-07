@@ -293,22 +293,6 @@ Una vez hallado $\beta$, despejamos los parámetros $\sigma$ y $\lambda$ y
 dibujamos el histograma y función de densidad superpuestos. Se observa
 excelente ajuste en todas las muestras.
 
-Realizamos un estudio de función para corroborar que los $\beta$ obtenidos fueran los buscados.
-
-\begin{figure}[H]
-  \centering
-  \caption{Estudio de la ecuación 4}
-  \include{grafico-ecuacion-4}
-\end{figure}
-
-Para poder apreciar correctamente el funcionamiento de los métodos, nos centramos en los ceros de la función.
-
-\begin{figure}[H]
-  \centering
-  \caption{Ceros de la ecuación 4}
-  \include{grafico-ecuacion-4-zoom}
-\end{figure}
-
 Siguiendo un razonamiento similar, modificamos el experimento anterior,
 esta vez aplicando el método de Newton, tomando como aproximación inicial
 $\beta_0 = 10$ y manteniendo los mismos criterios de parada y precisión.
@@ -352,7 +336,24 @@ de parada para elegir las que mejor ilustran las diferencias de estos ajustes, y
 generamos gráficos comparativos dibujando las curvas de ajuste para distintos valores
 sobre el mismo histograma.
 
+Realizamos un estudio de función para corroborar que los $\beta$ obtenidos fueran los buscados.
 
+\begin{figure}[H]
+  \centering
+  \caption{Estudio de la ecuación 4}
+  \include{grafico-ecuacion-4}
+\end{figure}
+
+Para poder apreciar correctamente el funcionamiento de los métodos, nos centramos en los ceros de la función.
+
+\begin{figure}[H]
+  \centering
+  \caption{Ceros de la ecuación 4}
+  \include{grafico-ecuacion-4-zoom}
+\end{figure}
+Se puede observar que la función tiene dos raices, una en el 0 y la otra dependiendo de la muestra. 
+
+Los $\beta$ hallados concuerdan con los resultados hallados aplicando los métodos.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Resultados                                                                %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
