@@ -11,6 +11,7 @@
 
 #include "Metodos.h"
 #include "Ecuaciones.h"
+#include "TFloat.h"
 
 using namespace std;
 using namespace GetOpt;
@@ -70,19 +71,18 @@ void ErrorAlAbrirArchivo(string path) {
     exit(-1);
 }
 
-vector<double>* LeerMuestra(ifstream& f) {
+vector<TFloat>* LeerMuestra(ifstream& f, size_t t) {
     // Inicializo el vector
     int longitud;
     f >> longitud;
-    vector<double>* muestra = new vector<double>();
+    vector<TFloat>* muestra = new vector<TFloat>();
 
     // Cargo la muestra
     double dato;
     for(int i = 0; i < longitud; i++) {
         f >> dato;
-        muestra->push_back(dato);
+        muestra->push_back(TFloat(dato, t));
     }
-
     return muestra;
 }
 
@@ -133,14 +133,14 @@ int main(int argc, char *argv[]) {
     if(!f.is_open()) ErrorAlAbrirArchivo(path);
 
     // Leer la muestra y cerrar archivo
-    vector<double>* muestra = LeerMuestra(f);
+    vector<TFloat>* muestra = LeerMuestra(f,t);
     f.close();
 
     // Guardamos el reloj en el instante anterior a aproximar beta
     clock_t c = clock();
 
     // Aproximamos beta
-    pair<double, int> beta;
+    pair<TFloat, int> beta;
     if(metodo == BISECCION) {
         beta = Biseccion(Ecuacion4, a0, b0, cp, err, n, *muestra, t);
     } else {
@@ -156,18 +156,18 @@ int main(int argc, char *argv[]) {
     // Mostramos resultados en pantalla
     if(args >> OptionPresent("csv")) {
         cout << path                                             << ","
-             << Sigma(beta.first, *muestra, t)                   << ","
-             << beta.first                                       << ","
-             << Lambda(beta.first, *muestra, t)                  << ","
+             << Sigma(beta.first, *muestra, t).dbl()             << ","
+             << beta.first.dbl()                                 << ","
+             << Lambda(beta.first, *muestra, t).dbl()            << ","
              << beta.second                                      << ","
              << (cp == ERROR_RELATIVO ? "Relativo" : "Absoluto") << ","
              << err                                              << ","
              << t                                                << ","
              << (c * 1000 / CLOCKS_PER_SEC)                      << endl;
     } else {
-        cout << "              Sigma = " << Sigma(beta.first, *muestra, t) << endl
-             << "               Beta = " << beta.first << endl
-             << "             Lambda = " << Lambda(beta.first, *muestra, t) << endl
+        cout << "              Sigma = " << Sigma(beta.first, *muestra, t).dbl() << endl
+             << "               Beta = " << beta.first.dbl() << endl
+             << "             Lambda = " << Lambda(beta.first, *muestra, t).dbl() << endl
              << "   # de iteraciones = " << beta.second << endl
              << "Tiempo de ejecución = " << (c * 1000 / CLOCKS_PER_SEC) << "ms" << endl;
     }

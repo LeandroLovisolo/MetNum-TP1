@@ -5,14 +5,14 @@
 
 #include "TFloat.h"
 
-double Ecuacion4(double beta, const vector<double>& muestra, size_t t);
+TFloat Ecuacion4(TFloat beta, const vector<TFloat>& muestra, size_t t);
 
-double Ecuacion5(double beta, const vector<double>& muestra, size_t t);
+TFloat Ecuacion5(TFloat beta, const vector<TFloat>& muestra, size_t t);
 
-double DEcuacion4(double beta, const vector<double>& muestra, size_t t);
+TFloat DEcuacion4(TFloat beta, const vector<TFloat>& muestra, size_t t);
 
-double Sigma(double beta, const vector<double>& muestra, size_t t);
+TFloat Sigma(TFloat beta, const vector<TFloat>& muestra, size_t t);
 
-double Lambda(double beta, const vector<double>& muestra, size_t t);
+TFloat Lambda(TFloat beta, const vector<TFloat>& muestra, size_t t);
 
 #endif /* ECUACIONES_H_ */

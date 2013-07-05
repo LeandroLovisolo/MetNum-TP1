@@ -2,9 +2,9 @@
 
 #include "Metodos.h"
 
-pair<double, int> Biseccion(double(*f)(double x, const vector<double>& muestra, size_t t),
+pair<TFloat, int> Biseccion(TFloat(*f)(TFloat x, const vector<TFloat>& muestra, size_t t),
                             double a0, double b0, CriterioParada cp, double err, unsigned int n,
-                            const vector<double>& muestra, size_t t) {
+                            const vector<TFloat>& muestra, size_t t) {
     TFloat a(a0, t), b(b0, t), p(t), p0(t);
     unsigned int i;
 
@@ -34,7 +34,7 @@ pair<double, int> Biseccion(double(*f)(double x, const vector<double>& muestra, 
         }
 
         // Elijo un nuevo intervalo
-        if((f(a.dbl(), muestra, t) * f(p.dbl(), muestra, t)) > 0) {
+        if((f(a, muestra, t) * f(p, muestra, t)).dbl() > 0) {
             a = p;
         } else {
             b = p;
@@ -45,20 +45,20 @@ pair<double, int> Biseccion(double(*f)(double x, const vector<double>& muestra, 
     }
 
     // Devolvemos la aproximación hallada y la cantidad de iteraciones realizadas.
-    return make_pair(p.dbl(), i > n ? n : i);
+    return make_pair(p, i > n ? n : i);
 }
 
-pair<double, int> Newton(double (*f )(double x, const vector<double>& muestra, size_t t),
-                         double (*df)(double x, const vector<double>& muestra, size_t t),
+pair<TFloat, int> Newton(TFloat (*f )(TFloat x, const vector<TFloat>& muestra, size_t t),
+                         TFloat (*df)(TFloat x, const vector<TFloat>& muestra, size_t t),
                          double p0, CriterioParada cp, double err, unsigned int n,
-                         const vector<double>& muestra, size_t t) {
+                         const vector<TFloat>& muestra, size_t t) {
     TFloat p(t);
     unsigned int i;
 
     // Aplico el método de Newton hasta n iteraciones
     for(i = 1; i <= n; i++) {
         // Busco nueva aproximación
-        p = TFloat(p0, t) - TFloat(f(p0, muestra, t), t) / df(p0, muestra, t);
+        p = TFloat(p0, t) - (f(TFloat(p0,t), muestra, t) / df(TFloat(p0, t), muestra, t));
 
         // Criterio de parada: valor indefinido
         if(isnan(p.dbl())) break;
@@ -67,12 +67,12 @@ pair<double, int> Newton(double (*f )(double x, const vector<double>& muestra, s
         if(cp == ERROR_ABSOLUTO) {
             // Si el error absoluto aproximado es menor que la cota
             // provista, nos detenemos en la aproximación actual
-            if(abs((p - p0).dbl()) < err) break;
+            if(abs((p - TFloat(p0, t)).dbl()) < err) break;
         }
 
         // Criterio de parada: error relativo
         else {
-            if(abs(((p - p0) / p).dbl()) < err) break;
+            if(abs((p - TFloat(p0,t) / p).dbl()) < err) break;
         }
 
         // Actualizo la aproximación inicial
@@ -80,5 +80,5 @@ pair<double, int> Newton(double (*f )(double x, const vector<double>& muestra, s
     }
 
     // Devolvemos la aproximación hallada y la cantidad de iteraciones realizadas.
-    return make_pair(p.dbl(), i > n ? n : i);
+    return make_pair(p, i > n ? n : i);
 }
