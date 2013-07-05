@@ -37,11 +37,15 @@ SIGMA_CONOCIDA           = 1.5
 BETA_CONOCIDA            = 9
 LAMBDA_CONOCIDA          = 3
 
-graficos: graficos-ecuacion-4 graficos-referencia grafico-distribucion-conocida graficos-comparativos
+graficos: graficos-ecuacion-4 grafico-cantidad-iteraciones graficos-referencia grafico-distribucion-conocida graficos-comparativos
 
 graficos-ecuacion-4:
 	./graficar-ecuacion-4
 	mv octave/*.eps octave/*.tex tex
+
+grafico-cantidad-iteraciones:
+	./graficar-cantidad-iteraciones
+	mv *.eps *.tex tex
 
 graficos-referencia:
 	./graficar --archivo referencia-1 "--metodo newton --p0 5 --muestra data/X1.txt"
