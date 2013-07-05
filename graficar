@@ -5,15 +5,24 @@
 # parámetros (sigma, beta, lambda). En el caso de proveer más de una tupla,
 # las curvas de ajuste se superponen sobre el histograma con distintos colores.
 #
-# Uso (única tuplaa):
+# Uso (única tupla aproximada):
 #   ./graficar [--pantalla | --archivo <nombre>] "[parametros del programa C++]"
 #
-# Uso (varias tuplas):
+# Uso (varias tuplas aproximadas):
 #   ./graficar [--pantalla | --archivo <nombre>] \
 #              "[parametros del programa C++ tupla 1]" \
 #              "[Leyenda tupla 1]" \
 #              "[parametros del programa C++ tupla 2]" \
 #              "[Leyenda tupla 2]" \
+#              ...
+#
+# Uso (tupla exacta y varias tuplas aproximadas):
+#   ./graficar [--pantalla | --archivo <nombre>] \
+#              --tupla-exacta [sigma] [beta] [lambda] [Leyenda tupla exacta]
+#              "[parametros del programa C++ tupla 2]" \
+#              "[Leyenda tupla 2]" \
+#              "[parametros del programa C++ tupla 3]" \
+#              "[Leyenda tupla 3]" \
 #              ...
 #
 # Opciones:
@@ -41,12 +50,15 @@ import os
 import sys
 import commands
 
+def parametros_incorrectos():
+    print "Parámetros incorrectos. Ver comentarios al comienzo del script."
+    sys.exit(-1)
+
 # Chequeo cantidad de parámetros
 if len(sys.argv) < 2 or \
         (not sys.argv[1] in ["--pantalla", "--archivo"]) or \
         (sys.argv[1] == "--archivo" and len(sys.argv) < 3):
-    print "Parámetros incorrectos. Ver comentarios al comienzo del script."
-    sys.exit(-1)
+    parametros_incorrectos()
 
 # Extraigo parámetros
 if sys.argv[1] == "--archivo":
@@ -64,7 +76,14 @@ while argumentos != []:
     
     # Obtengo los parametros del programa C++ para cada tupla
     # y la etiqueta en el gráfico
-    if len(argumentos) >= 2:
+    if argumentos[0] == "--tupla-exacta":
+        if len(argumentos) >= 5:
+            tuplas.append(argumentos[1:5]) # [sigma, beta, lambda, etiqueta]
+            argumentos = argumentos[5:]
+            continue
+        else:
+            parametros_incorrectos()
+    elif len(argumentos) >= 2:
         parametros = argumentos[0]
         etiqueta   = argumentos[1]
         argumentos = argumentos[2:]

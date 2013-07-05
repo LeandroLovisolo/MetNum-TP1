@@ -31,7 +31,13 @@ MANTISA_3                = 15
 PRECISION_1              = 0.001
 PRECISION_2              = 0.1
 
-graficos: graficos-ecuacion-4 graficos-referencia graficos-comparativos
+# Parámetros para el gráfico de la muestra de distribución conocida
+MUESTRA_CONOCIDA         = data/tag/x_15_9_3.txt
+SIGMA_CONOCIDA           = 1.5
+BETA_CONOCIDA            = 9
+LAMBDA_CONOCIDA          = 3
+
+graficos: graficos-ecuacion-4 graficos-referencia grafico-distribucion-conocida graficos-comparativos
 
 graficos-ecuacion-4:
 	./graficar-ecuacion-4
@@ -45,6 +51,16 @@ graficos-referencia:
 	# ./graficar --archivo referencia-5 "--metodo newton --p0 5 --muestra data/X5.txt"
 	# ./graficar --archivo referencia-6 "--metodo newton --p0 5 --muestra data/X6.txt"
 	# ./graficar --archivo referencia-7 "--metodo newton --p0 5 --muestra data/X7.txt"
+	mv *.eps *.tex tex
+
+grafico-distribucion-conocida:
+	./graficar --archivo grafico-distribucion-conocida \
+	           --tupla-exacta $(SIGMA_CONOCIDA) $(BETA_CONOCIDA) $(LAMBDA_CONOCIDA) \
+	           "Distribuci\'on conocida" \
+	           "--metodo newton --p0 15 --muestra $(MUESTRA_CONOCIDA)" \
+	           "Newton" \
+	           "--metodo biseccion --a0 1 --b0 1000 --muestra $(MUESTRA_CONOCIDA)" \
+	           "Bisecci\'on"
 	mv *.eps *.tex tex
 
 graficos-comparativos:
