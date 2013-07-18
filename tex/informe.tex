@@ -408,15 +408,30 @@ Las siguientes figuras ilustran distintos ajustes obtenidos haciendo variar algu
 
 \subsubsection{Promedio de iteraciones por método}
 
-Promedios computados a partir de los resultados presentados en el Apéndice B (ver columnas \textit{Iteraciones} de las tablas correspondientes.)
+Promedios de las iteraciones realizadas con ambos métodos, diferentes cotas y criterios de parada.
 
 \begin{figure}[H]
   \centering
-  \caption{Cantidad promedio de iteraciones por método.}
-  \include{grafico-cantidad-iteraciones}
+  \caption{Iteraciones promedio}
+  \includegraphics[width=140mm]{promItAbs.png}
 \end{figure}
 
+\begin{center}
 
+\begin{tabular}{| c | c | c |  c | c | c |}
+\hline
+\multicolumn{3}{ |c| }{Bisección} & \multicolumn{3}{ |c| }{Newton} \\
+\hline
+17 & 0.001 & Absoluto & 5 & Absoluto & 0.001\\
+14 & 0.01 & Absoluto & 4 & Absoluto & 0.01\\
+10 & 0.1 & Absoluto  & 3 & Absoluto & 0.1\\
+15 & 0.001 & Relativo & 5 & Relativo & 0.001\\
+12 & 0.01 & Relativo & 3 & Relativo & 0.01\\
+9 & 0.1 & Relativo & 2 & Relativo & 0.1\\
+\hline
+\end{tabular}
+
+\end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Discusión                                                                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -444,10 +459,11 @@ pero prácticamente despreciable comparando con 0.001. Sin embargo, el ajuste
 obtenido con cota 0.1 es excelente, y decrementar la cota produce cambios en
 el ajuste casi indistinguibles a simple vista. Lo mismo ocurre con cotas de error relativo.
 
-La figura 10 ilustra la diferencia de ajuste con cotas de error relativo 0.1 vs 0.001,
+La figura 9 ilustra la diferencia de ajuste con cotas de error relativo 0.1 vs 0.001,
 donde la diferencia entre las curvas es pequeñísima, sin embargo los parámetros
 $\beta$ obtenidos difieren mucho entre sí: 4.48047 vs 4.12698, respectivamente.
 
+Observando la Figura 10, podemos observar las diferencias entre las cantidades de iteraciones. En ambos método, el criterio de parada \textit{Relativo} obtuvo la menor cantidad de iteraciones. También se comprueba que el aumento de precisión (\textit{Cota de error}) implica un aumento de iteraciones. Al ser la convergencia del método de \textit{Bisección} lineal, el aumento de las iteraciones es mayor que en \textit{Newton}.
 
 \subsection{Bits de precisión en mantisa}
 No observamos mejoras significativas de ajuste al incrementar la precisión de
